@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北疆大环线10天自驾攻略 · 超划算AI旅行管家</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:#f5f7fa; color:#333; line-height:1.6; }
+.container { max-width:900px; margin:0 auto; padding:20px; }
+.header { text-align:center; padding:40px 20px 30px; background:linear-gradient(135deg,#1a5c3a,#2d8659 50%,#f0a500); color:#fff; border-radius:16px; margin-bottom:24px; }
+.header h1 { font-size:28px; margin-bottom:8px; }
+.header .subtitle { font-size:15px; opacity:.9; }
+.header .tag { display:inline-block; background:rgba(255,255,255,.2); padding:4px 12px; border-radius:20px; font-size:13px; margin-top:12px; }
+.section { background:#fff; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+.section-title { font-size:20px; font-weight:700; margin-bottom:16px; }
+.budget-table { width:100%; border-collapse:collapse; }
+.budget-table th { text-align:left; padding:10px 12px; background:#f0f0f5; border-radius:8px; font-size:14px; color:#666; }
+.budget-table td { padding:10px 12px; border-bottom:1px solid #f0f0f0; font-size:15px; }
+.budget-table .total td { font-weight:700; background:#fafafa; }
+.day-card { border:1px solid #e8f5e9; border-radius:12px; overflow:hidden; margin-bottom:20px; }
+.day-header { padding:16px 20px; color:#fff; }
+.day-header h3 { font-size:18px; }
+.day-header .meta { font-size:13px; opacity:.9; margin-top:4px; }
+.day-body { padding:20px; }
+.time-block { margin-bottom:20px; }
+.time-label { font-size:14px; font-weight:600; color:#888; margin-bottom:8px; }
+.poi-card { padding:12px; border-radius:10px; }
+.poi-card.hot { background:#fff8f0; border:1px solid #ffe0b2; }
+.poi-card.local { background:#f1f8e9; border:1px solid #c8e6c9; }
+.poi-info h4 { font-size:16px; margin-bottom:4px; }
+.poi-info .price { color:#e74c3c; font-weight:600; font-size:15px; }
+.poi-info .free-tag { color:#27ae60; font-weight:600; font-size:14px; }
+.poi-info .duration { color:#666; font-size:13px; margin-top:2px; }
+.poi-info .addr { color:#999; font-size:13px; margin-top:2px; }
+.poi-info .reason { font-size:13px; color:#2e7d32; margin-top:4px; font-style:italic; }
+.poi-info .local-tag { display:inline-block; padding:2px 10px; background:#c8e6c9; color:#2e7d32; border-radius:10px; font-size:12px; margin-left:8px; }
+.poi-info .must-tag { display:inline-block; padding:2px 10px; background:#fff3e0; color:#e65100; border-radius:10px; font-size:12px; margin-left:8px; }
+.driving-line { padding:10px 14px; background:#fff3e0; border-radius:8px; margin:8px 0; font-size:14px; color:#e65100; }
+.food-card { padding:12px; background:#f0fff4; border-radius:10px; border:1px solid #c8e6c9; }
+.food-card .food-title { font-size:15px; font-weight:600; color:#2e7d32; }
+.food-card .food-detail { font-size:14px; color:#555; margin-top:4px; }
+.hotel-card { padding:12px; background:#f3e5f5; border-radius:10px; border:1px solid #e1bee7; }
+.hotel-card .hotel-title { font-size:15px; font-weight:600; color:#6a1b9a; }
+.hotel-card .hotel-detail { font-size:14px; color:#555; margin-top:4px; }
+.day-cost { text-align:right; padding:12px 0 0; border-top:1px dashed #e0e0e0; margin-top:8px; font-size:15px; }
+.day-cost strong { color:#e74c3c; font-size:18px; }
+.time-check { padding:8px 12px; background:#f9fbe7; border-radius:8px; font-size:13px; color:#827717; margin-top:8px; }
+.summary-table { width:100%; border-collapse:collapse; margin-top:12px; }
+.summary-table th { text-align:center; padding:8px; background:#f0f0f5; border-radius:6px; font-size:13px; color:#666; }
+.summary-table td { text-align:center; padding:10px 8px; border-bottom:1px solid #f0f0f0; font-size:14px; }
+.summary-table .total-row td { font-weight:700; background:#fafafa; }
+.budget-result { text-align:center; margin-top:16px; padding:16px; border-radius:10px; }
+.budget-result.save { background:#e8f5e9; color:#2e7d32; }
+.budget-result .amount { font-size:28px; font-weight:700; }
+.footer { text-align:center; padding:20px; color:#999; font-size:13px; }
+.must-go { background:#fff8e1; border:1px solid #ffe082; border-radius:10px; padding:12px 16px; margin-bottom:12px; }
+.must-go h4 { font-size:15px; color:#f57f17; margin-bottom:6px; }
+.must-go ul { list-style:none; padding:0; }
+.must-go li { font-size:14px; color:#555; padding:3px 0; }
+.avoid-list { background:#ffebee; border:1px solid #ffcdd2; border-radius:10px; padding:12px 16px; margin-bottom:12px; }
+.avoid-list h4 { font-size:15px; color:#c62828; margin-bottom:6px; }
+.avoid-list ul { list-style:none; padding:0; }
+.avoid-list li { font-size:14px; color:#555; padding:3px 0; }
+.warn-box { background:#fff3cd; border:2px solid #ffc107; border-radius:12px; padding:16px; margin:16px 0; }
+.warn-box h4 { color:#856404; font-size:16px; margin-bottom:8px; }
+.warn-box ul { list-style:none; padding:0; }
+.warn-box li { font-size:14px; color:#856404; padding:3px 0; }
+.route-map { background:#f8f9fa; border-radius:12px; padding:16px; margin-bottom:16px; font-size:14px; color:#555; line-height:2; }
+.route-map .stop { display:inline-block; padding:2px 10px; background:#e3f2fd; color:#1565c0; border-radius:12px; margin:2px 0; }
+.route-map .arrow { color:#999; margin:0 4px; }
+.personality-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.2); color:#fff; padding:4px 12px; border-radius:20px; font-size:13px; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>北疆大环线 · 10天自驾攻略</h1>
+  <div class="subtitle">2026.10.01 - 10.10 | 国庆黄金周 | 租车自驾 | 自然风光</div>
+  <div class="tag">AI知识库生成 · 演示模式（无飞猪预订链接）</div>
+  <span class="personality-badge">🧠 花得值</span>
+</div>
+
+<div class="section">
+  <div class="section-title">🗺️ 路线总览</div>
+  <div class="route-map">
+    <span class="stop">乌鲁木齐</span><span class="arrow">→</span>
+    <span class="stop">可可托海</span><span class="arrow">→</span>
+    <span class="stop">布尔津/五彩滩</span><span class="arrow">→</span>
+    <span class="stop">喀纳斯</span><span class="arrow">→</span>
+    <span class="stop">禾木</span><span class="arrow">→</span>
+    <span class="stop">乌尔禾魔鬼城</span><span class="arrow">→</span>
+    <span class="stop">赛里木湖</span><span class="arrow">→</span>
+    <span class="stop">果子沟</span><span class="arrow">→</span>
+    <span class="stop">伊宁</span><span class="arrow">→</span>
+    <span class="stop">那拉提</span><span class="arrow">→</span>
+    <span class="stop">独库公路</span><span class="arrow">→</span>
+    <span class="stop">乌鲁木齐</span>
+  </div>
+  <div style="font-size:14px;color:#888;">全程约 3,500km | 核心高速+国道 | 国庆北疆已入秋冬</div>
+</div>
+
+<div class="warn-box">
+  <h4>⚠️ 国庆北疆自驾重要提醒</h4>
+  <ul>
+    <li>10月初喀纳斯/禾木夜间可能降至0°C以下，必须带羽绒服</li>
+    <li>独库公路10月可能因降雪封路，需关注实时路况，准备G218备选</li>
+    <li>国庆是旺季，喀纳斯/禾木住宿翻倍且必须提前订</li>
+    <li>赛里木湖10月初可能结冰，景色与夏季不同但别有风味</li>
+    <li>新疆日落晚（10月约19:30-20:00），驾车注意实际比北京时间晚约2小时</li>
+    <li>沿途加油站间隔远，见站加油，尤其独库公路段</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="section-title">🎯 必去 & 避雷</div>
+  <div class="must-go">
+    <h4>⭐ 必去景点</h4>
+    <ul>
+      <li>喀纳斯（神仙湾/月亮湾/卧龙湾）— 北疆精华，秋天最美</li>
+      <li>禾木村 — 图瓦人村落，晨雾炊烟，中国最美秋色</li>
+      <li>赛里木湖环湖 — 大西洋最后一滴眼泪</li>
+      <li>独库公路 — 中国最美公路，一年只通几个月</li>
+      <li>乌尔禾魔鬼城 — 雅丹地貌</li>
+    </ul>
+  </div>
+  <div class="must-go" style="background:#f1f8e9;border-color:#c8e6c9;">
+    <h4 style="color:#2e7d32;">🌸 AI本地推荐</h4>
+    <ul>
+      <li>五彩滩（布尔津）— 额尔齐斯河畔彩色雅丹，日落最美</li>
+      <li>白哈巴村 — 西北第一村，比禾木更原始，需办边防证</li>
+      <li>喀赞其民俗区（伊宁）— 蓝色维吾尔老城，手工冰淇淋</li>
+      <li>琼库什台村 — 那拉提附近隐藏村落，原生态哈萨克牧区</li>
+    </ul>
+  </div>
+  <div class="avoid-list">
+    <h4>⚠️ 建议避开</h4>
+    <ul>
+      <li>天山天池 — 国庆人挤人，时间花在喀纳斯更值</li>
+      <li>吐鲁番火焰山 — 10月已无夏日热度，偏离环线</li>
+      <li>克拉玛依市区 — 仅路过加油休整</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">💰 预算分配（2人人均）</div>
+  <table class="budget-table">
+    <tr><th>类别</th><th>人均</th><th>占比</th><th>策略</th></tr>
+    <tr><td>租车+油费</td><td>¥3,000</td><td>30%</td><td>SUV四驱，3500km×0.8元/km</td></tr>
+    <tr><td>住宿</td><td>¥3,500</td><td>35%</td><td>乌市/布尔津快捷，喀纳斯/禾木木屋旺季</td></tr>
+    <tr><td>景点门票</td><td>¥1,500</td><td>15%</td><td>喀纳斯套票最贵（约¥350含区间车）</td></tr>
+    <tr><td>餐饮</td><td>¥1,500</td><td>15%</td><td>新疆分量大，日均¥150/人</td></tr>
+    <tr><td>过路+停车+备用</td><td>¥1,000</td><td>5%</td><td>新疆高速少，备用金应对封路绕行</td></tr>
+    <tr class="total"><td>合计（人均）</td><td>¥10,500</td><td>100%</td><td></td></tr>
+  </table>
+</div>
+
+<!-- Day 1 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#43c6e8,#4facfe);">
+    <h3>Day 1 · 10月1日 乌鲁木齐→可可托海</h3>
+    <div class="meta">赶路日 | 约530km/6-7h | G216穿越古尔班通古特沙漠</div>
+  </div>
+  <div class="day-body">
+    <div class="driving-line">🚗 乌鲁木齐取车 → G216北上 → 经古尔班通古特沙漠 → 可可托海</div>
+    <div class="time-block">
+      <div class="time-label">🌤️ 途中</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>古尔班通古特沙漠公路 <span class="local-tag">🌸 路过推荐</span></h4>
+          <span class="free-tag">🆓 免费</span>
+          <div class="duration">🕐 沿途开车看，随时停车拍照</div>
+          <div class="reason">G216本身就是穿越沙漠的景观大道，比任何景区都壮观</div>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🌇 下午抵达</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>可可托海景区 <span class="must-tag">⭐ 可选</span></h4>
+          <span class="price">约¥90（需查看实际票价）</span>
+          <div class="duration">🕐 建议游览 2 小时 | 时间拆解：额尔齐斯大峡谷步行1.5h + 神钟山拍照30min</div>
+          <div class="addr">阿勒泰地区富蕴县</div>
+          <div class="reason">抵达早可以进去，晚就门口转转，不强制买票</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 富蕴县城</div><div class="food-detail">手抓肉、拉条子 | ¥60/人 | 两人三份够</div></div>
+    <div class="hotel-card"><div class="hotel-title">🏨 富蕴县城快捷酒店</div><div class="hotel-detail">¥200-300/晚 | 县城吃饭方便便宜</div></div>
+    <div class="day-cost">油费¥420 + 住宿¥250 + 门票¥90 + 餐饮¥60 = <strong>¥820（人均¥410）</strong></div>
+    <div class="time-check">✅ 时间：驾车7h + 景区2h + 用餐1h = 10h ✅ 赶路日<br>✅ 体力：中体力（开车为主）✅ 合理</div>
+  </div>
+</div>
+
+<!-- Day 2 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#667eea,#764ba2);">
+    <h3>Day 2 · 10月2日 可可托海→布尔津→五彩滩</h3>
+    <div class="meta">轻松日 | 约350km/4-5h | 下午五彩滩日落</div>
+  </div>
+  <div class="day-body">
+    <div class="driving-line">🚗 可可托海 → S319 → 布尔津 | 约350km/4-5h | 沿途阿尔泰山风光</div>
+    <div class="food-card"><div class="food-title">🥢 布尔津县城午餐</div><div class="food-detail">布尔津烤鱼（额尔齐斯河鱼）、格瓦斯 | ¥80/人</div></div>
+    <div class="time-block">
+      <div class="time-label">🌆 下午 · 五彩滩</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>五彩滩 <span class="local-tag">🌸 AI推荐</span> <span class="must-tag">⭐ 必去</span></h4>
+          <span class="price">约¥60（需查看实际票价）</span>
+          <div class="duration">🕐 建议游览 1.5 小时 | 16:30-18:00日落前最佳光线</div>
+          <div class="addr">布尔津以西约24km，额尔齐斯河畔</div>
+          <div class="reason">彩色雅丹+河景组合，日落时分最美，离布尔津近不绕路</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 布尔津河堤夜市</div><div class="food-detail">烤冷水鱼、酸奶、烤羊肉串 | ¥70/人</div></div>
+    <div class="hotel-card"><div class="hotel-title">🏨 布尔津县城酒店</div><div class="hotel-detail">¥300-400/晚 | 国庆需提前订 | 明天去喀纳斯仅2h</div></div>
+    <div class="day-cost">油费¥280 + 住宿¥350 + 门票¥60 + 餐饮¥150 = <strong>¥840（人均¥420）</strong></div>
+    <div class="time-check">✅ 时间：驾车4.5h + 五彩滩1.5h + 用餐2h = 8h ✅ 轻松<br>✅ 体力：轻体力 ✅ 非常合理</div>
+  </div>
+</div>
+
+<!-- Day 3 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#2d8659,#41a373);">
+    <h3>Day 3 · 10月3日 布尔津→喀纳斯（核心日）</h3>
+    <div class="meta">全天一个景区 | 约150km/2.5h山路 | 喀纳斯深度游</div>
+  </div>
+  <div class="day-body">
+    <div class="driving-line">🚗 布尔津 → S226 → 喀纳斯景区大门（贾登峪）| 约150km/2.5-3h | 山路弯多慢开</div>
+    <div class="time-block">
+      <div class="time-label">🌤️ 全天 · 喀纳斯</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>喀纳斯景区 <span class="must-tag">⭐ 必去</span></h4>
+          <span class="price">门票约¥160 + 区间车¥120（需查看实际票价）</span>
+          <div class="duration">🕐 建议游览 5 小时</div>
+          <div style="margin-top:8px;font-size:14px;">
+            <strong>时间拆解：</strong><br>
+            • 神仙湾晨雾：30min（早上光线最好）<br>
+            • 月亮湾→卧龙湾徒步：1.5h（沿木栈道，最美段）<br>
+            • 喀纳斯湖边：1h<br>
+            • 观鱼台登高看全景：1.5h（另购票约¥60）<br>
+            • 排队/区间车：1h
+          </div>
+          <div class="addr">阿勒泰地区布尔津县</div>
+          <div class="reason">10月初金色白桦林+碧绿湖水，北疆精华</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 景区内/贾登峪</div><div class="food-detail">景区内贵且少，建议自带干粮/自热饭 | ¥50/人</div></div>
+    <div class="hotel-card"><div class="hotel-title">🏠 贾登峪/喀纳斯村木屋</div><div class="hotel-detail">¥500-800/晚 | 国庆必须提前订 | 村内在景区内看晨雾方便，贾登峪在门外便宜</div></div>
+    <div class="day-cost">油费¥120 + 住宿¥650 + 门票¥340 + 餐饮¥50 = <strong>¥1,160（人均¥580）</strong></div>
+    <div class="time-check">✅ 时间：驾车3h + 景区5h + 用餐1h = 9h ✅ 深度游<br>✅ 体力：中体力（徒步1.5h+区间车）✅ 合理</div>
+  </div>
+</div>
+
+<!-- Day 4 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#f093fb,#f5576c);">
+    <h3>Day 4 · 10月4日 喀纳斯→禾木→南下</h3>
+    <div class="meta">最美一天 | 禾木晨雾+下午赶路 | 约70km+300km</div>
+  </div>
+  <div class="day-body">
+    <div class="time-block">
+      <div class="time-label">🌅 清晨 · 禾木晨雾</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>禾木村 <span class="must-tag">⭐ 必去</span></h4>
+          <span class="price">进村约¥60 + 区间车¥100（需查看实际票价）</span>
+          <div class="duration">🕐 建议游览 3 小时</div>
+          <div style="margin-top:8px;font-size:14px;">
+            <strong>时间拆解：</strong><br>
+            • 清晨6:30出发上山步行30min<br>
+            • 观景台看晨雾炊烟：1h（日出约7:00）<br>
+            • 下山逛村子白桦林：1h<br>
+            • 排队/区间车：1h
+          </div>
+          <div class="addr">布尔津县禾木乡</div>
+          <div class="reason">中国最美秋色，晨雾+炊烟+金色白桦林，起早值得</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 禾木村内</div><div class="food-detail">图瓦人手抓肉、奶茶 | ¥60/人 | 旺季可能排队</div></div>
+    <div class="driving-line">🚗 禾木 → 贾登峪 → G219南下 → 乌尔禾方向 | 约300km/4h</div>
+    <div class="hotel-card"><div class="hotel-title">🏨 乌尔禾区/和什托洛盖镇</div><div class="hotel-detail">¥200-300/晚 | 明天去魔鬼城近</div></div>
+    <div class="day-cost">油费¥240 + 住宿¥250 + 门票¥160 + 餐饮¥120 = <strong>¥770（人均¥385）</strong></div>
+    <div class="time-check">⚠️ 时间：禾木3h + 驾车4h + 用餐1.5h = 8.5h ✅<br>⚠️ 体力：早起爬山（重体力1h）+ 下午开车4h ⚠️ 建议轮换驾驶</div>
+  </div>
+</div>
+
+<!-- Day 5 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#ff9a56,#ff6a88);">
+    <h3>Day 5 · 10月5日 乌尔禾魔鬼城→赛里木湖</h3>
+    <div class="meta">长途日 | 约550km/6h | 魔鬼城+赶路西进</div>
+  </div>
+  <div class="day-body">
+    <div class="driving-line">🚗 乌尔禾 → 魔鬼城（20km）→ G30连霍高速 → 精河 → 赛里木湖</div>
+    <div class="time-block">
+      <div class="time-label">🌤️ 上午 · 魔鬼城</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>乌尔禾魔鬼城 <span class="must-tag">⭐ 必去</span></h4>
+          <span class="price">约¥80（需查看实际票价）</span>
+          <div class="duration">🕐 建议游览 1.5 小时 | 拆解：区间车穿越40min + 下车拍照30min + 排队20min</div>
+          <div class="addr">克拉玛依市乌尔禾区</div>
+          <div class="reason">雅丹风蚀城堡群，上午去不热不晒</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 途中服务区/精河县城</div><div class="food-detail">拌面/抓饭 | ¥50/人 | 长途简餐</div></div>
+    <div class="time-block">
+      <div class="time-label">🌇 傍晚抵达 · 赛里木湖</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>赛里木湖 <span class="must-tag">⭐ 必去</span></h4>
+          <span class="price">10月可能免门票或低价</span>
+          <div class="duration">🕐 建议游览 1 小时（日落，明天环湖深度游）</div>
+          <div class="reason">10月初湖面可能部分结冰，雪山倒映冰湖，和夏天完全不同</div>
+        </div>
+      </div>
+    </div>
+    <div class="hotel-card"><div class="hotel-title">🏨 赛湖周边蒙古包/精河县城</div><div class="hotel-detail">湖边蒙古包¥400-600/晚（看星空），县城¥200/晚</div></div>
+    <div class="day-cost">油费¥440 + 住宿¥400 + 门票¥80 + 餐饮¥100 = <strong>¥1,020（人均¥510）</strong></div>
+    <div class="time-check">⚠️ 时间：驾车6h + 魔鬼城1.5h + 赛湖1h + 用餐1h = 9.5h ⚠️ 注意疲劳驾驶<br>✅ 体力：中体力（开车为主）✅ 合理但注意休息</div>
+  </div>
+</div>
+
+<!-- Day 6 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#4facfe,#43c6e8);">
+    <h3>Day 6 · 10月6日 赛里木湖环湖→果子沟→伊宁</h3>
+    <div class="meta">美好日 | 约200km | 赛湖深度+果子沟大桥+伊宁逛吃</div>
+  </div>
+  <div class="day-body">
+    <div class="time-block">
+      <div class="time-label">🌤️ 上午 · 赛里木湖环湖</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>赛里木湖环湖自驾 <span class="must-tag">⭐ 必去</span></h4>
+          <span class="free-tag">🆓 环湖公路免费</span>
+          <div class="duration">🕐 建议游览 3 小时</div>
+          <div style="margin-top:8px;font-size:14px;">
+            <strong>时间拆解：</strong><br>
+            • 环湖自驾90km：1.5h（走走停停拍照）<br>
+            • 点将台/西海草原下车：1h<br>
+            • 湖边发呆拍照：30min
+          </div>
+          <div class="reason">环湖一周90km每个角度湖色不同，10月雪山+冰湖</div>
+        </div>
+      </div>
+    </div>
+    <div class="driving-line">🚗 赛湖 → 果子沟隧道 → 果子沟大桥 | 约50km/1h | 中国最美高速公路</div>
+    <div class="time-block">
+      <div class="time-label">🌞 中午 · 果子沟大桥</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>果子沟大桥 <span class="local-tag">🌸 路过推荐</span></h4>
+          <span class="free-tag">🆓 免费（高速上直接看）</span>
+          <div class="duration">🕐 开车经过时最壮观，不需要停留</div>
+          <div class="reason">双塔斜拉桥穿越天山峡谷，秋天层林尽染</div>
+        </div>
+      </div>
+    </div>
+    <div class="driving-line">🚗 果子沟 → 霍尔果斯口岸（可选30min）→ 伊宁 | 约100km/1.5h</div>
+    <div class="time-block">
+      <div class="time-label">🌇 下午 · 伊宁喀赞其</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>喀赞其民俗旅游区 <span class="local-tag">🌸 AI推荐</span></h4>
+          <span class="free-tag">🆓 免费逛（坐马车/进民居另收费）</span>
+          <div class="duration">🕐 建议游览 2 小时 | 蓝色维吾尔老城，手工冰淇淋，坐马车逛巷子</div>
+          <div class="addr">伊宁市老城区</div>
+          <div class="reason">比乌鲁木齐更有西域风情，伊宁是新疆美食最丰富的城市之一</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 伊宁喀赞其/汉人街</div><div class="food-detail">手工冰淇淋、烤包子、纳仁面、羊蹄 | ¥80/人</div></div>
+    <div class="hotel-card"><div class="hotel-title">🏨 伊宁市区酒店</div><div class="hotel-detail">¥250-350/晚 | 好好休整，前面几天条件差</div></div>
+    <div class="day-cost">油费¥160 + 住宿¥300 + 餐饮¥160 = <strong>¥620（人均¥310）</strong></div>
+    <div class="time-check">✅ 时间：赛湖3h + 驾车2.5h + 喀赞其2h + 用餐1.5h = 9h ✅ 美好一天<br>✅ 体力：轻体力（自驾+散步）✅ 休整日</div>
+  </div>
+</div>
+
+<!-- Day 7 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#41a373,#2d8659);">
+    <h3>Day 7 · 10月7日 伊宁→那拉提</h3>
+    <div class="meta">中等日 | 约280km/4h | 草原日落+哈萨克风情</div>
+  </div>
+  <div class="day-body">
+    <div class="driving-line">🚗 伊宁 → G218东行 → 那拉提 | 约280km/4h | 沿途巩乃斯河谷风光</div>
+    <div class="time-block">
+      <div class="time-label">🌆 下午 · 那拉提草原</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>那拉提草原 <span class="must-tag">⭐ 可选</span></h4>
+          <span class="price">约¥95（需查看实际票价）</span>
+          <div class="duration">🕐 建议游览 2.5 小时 | 拆解：区间车30min + 草原漫步/骑马1.5h + 拍照30min</div>
+          <div class="addr">伊犁州新源县</div>
+          <div class="reason">10月草原已转黄，不同于夏季翠绿，别有风味；骑马约¥100/圈</div>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🌸 可选 · 琼库什台村</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>琼库什台村 <span class="local-tag">🌸 AI推荐</span></h4>
+          <span class="free-tag">🆓 免费</span>
+          <div class="duration">🕐 如果不去那拉提景区，可以来这个原生态村落，离那拉提约90km</div>
+          <div class="reason">没有商业化的哈萨克牧区，乌孙古道起点，比那拉提更原始</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 那拉提镇</div><div class="food-detail">手抓羊肉、马奶 | ¥60/人</div></div>
+    <div class="hotel-card"><div class="hotel-title">🏨 那拉提镇民宿</div><div class="hotel-detail">¥200-400/晚 | 明天走独库公路</div></div>
+    <div class="day-cost">油费¥220 + 住宿¥300 + 门票¥95 + 餐饮¥120 = <strong>¥735（人均¥368）</strong></div>
+    <div class="time-check">✅ 时间：驾车4h + 草原2.5h + 用餐1.5h = 8h ✅ 合理<br>✅ 体力：中体力（草原散步）✅ 合理</div>
+  </div>
+</div>
+
+<!-- Day 8 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#6a11cb,#2575fc);">
+    <h3>Day 8 · 10月8日 那拉提→独库公路→巴音布鲁克</h3>
+    <div class="meta">公路日 | 约150km | 独库公路最美段+巴音布鲁克日落</div>
+  </div>
+  <div class="day-body">
+    <div class="warn-box" style="margin:0 0 16px 0;">
+      <h4>⚠️ 独库公路路况</h4>
+      <ul>
+        <li>10月可能因降雪封路！出发前必须查实时路况</li>
+        <li>如封路：走G218经巩乃斯沟→和静→库尔勒绕回乌鲁木齐（多200km）</li>
+        <li>如通行：那拉提→巴音布鲁克段约150km/3-4h（山路慢开）</li>
+      </ul>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🚗 上午 · 独库公路</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>独库公路（G217） <span class="must-tag">⭐ 必去</span></h4>
+          <span class="free-tag">🆓 免费</span>
+          <div class="duration">🕐 驾车 3-4 小时 | 这段路本身就是景点</div>
+          <div style="margin-top:8px;font-size:14px;">
+            <strong>沿途看点：</strong><br>
+            • 阿艾敖能达坂（海拔约3200m）<br>
+            • 沿途雪山+峡谷+草甸切换<br>
+            • 注意：见加油站必加油！
+          </div>
+          <div class="reason">中国最美公路，一年只通5个月，10月能看到雪山秋色</div>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🌇 下午 · 巴音布鲁克</div>
+      <div class="poi-card hot">
+        <div class="poi-info">
+          <h4>巴音布鲁克草原 <span class="must-tag">⭐ 必去</span></h4>
+          <span class="price">约¥65（需查看实际票价）</span>
+          <div class="duration">🕐 建议游览 3 小时</div>
+          <div style="margin-top:8px;font-size:14px;">
+            <strong>时间拆解：</strong><br>
+            • 区间车进景区：30min<br>
+            • 巴西里克观景台看九曲十八弯：1.5h（日落前最美）<br>
+            • 天鹅湖看天鹅：30min<br>
+            • 排队/区间车：1h<br>
+            <em>10月日落约19:30，建议15:00前进景区</em>
+          </div>
+          <div class="addr">巴音郭楞蒙古自治州和静县</div>
+          <div class="reason">九曲十八弯日落是北疆经典画面，10月天鹅还在</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 巴音布鲁克镇</div><div class="food-detail">蒙古族手抓肉、奶茶 | ¥60/人 | 镇小选择少</div></div>
+    <div class="hotel-card"><div class="hotel-title">🏨 巴音布鲁克镇民宿</div><div class="hotel-detail">¥300-500/晚 | 旺季 | 高海拔夜间冷，注意保暖</div></div>
+    <div class="day-cost">油费¥120 + 住宿¥400 + 门票¥65 + 餐饮¥120 = <strong>¥705（人均¥353）</strong></div>
+    <div class="time-check">✅ 时间：驾车3.5h + 巴音布鲁克3h + 用餐1.5h = 8h ✅ 合理<br>✅ 体力：轻体力（开车+景区区间车）✅ 合理</div>
+  </div>
+</div>
+
+<!-- Day 9 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#11998e,#38ef7d);">
+    <h3>Day 9 · 10月9日 巴音布鲁克→独库南段→库车/返程北上</h3>
+    <div class="meta">长赶路日 | 约400-500km | 独库南段或G217全程北上</div>
+  </div>
+  <div class="day-body">
+    <div class="time-block">
+      <div class="time-label">🚗 方案A：独库南段（如通行）</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>独库公路南段 <span class="local-tag">🌸 路过推荐</span></h4>
+          <span class="free-tag">🆓 免费</span>
+          <div class="duration">🕐 驾车约4-5h | 巴音布鲁克→库车段</div>
+          <div style="margin-top:8px;font-size:14px;">
+            沿途：天山神秘大峡谷（可停留1h，约¥65）<br>
+            然后G217北上返回乌鲁木齐方向，需注意总里程
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🚗 方案B：G217直接北上（如独库封路）</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>G217北上返回 <span class="local-tag">🌸 备选</span></h4>
+          <span class="free-tag">🆓 免费</span>
+          <div class="duration">🕐 驾车约6-7h | 巴音布鲁克→独山子→乌鲁木齐</div>
+          <div style="margin-top:8px;font-size:14px;">
+            如独库南段也封路，直接G217或G218绕行返回<br>
+            途中可在独山子大峡谷停留（免费/低价）
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 途中服务区/库车</div><div class="food-detail">库车大馕、拌面 | ¥50/人</div></div>
+    <div class="hotel-card"><div class="hotel-title">🏨 库车县城 或 乌鲁木齐（如直达）</div><div class="hotel-detail">库车¥200-300 | 或一口气开回乌鲁木齐约700km需8h+</div></div>
+    <div class="day-cost">油费¥400 + 住宿¥250 + 餐饮¥100 = <strong>¥750（人均¥375）</strong></div>
+    <div class="time-check">⚠️ 时间：驾车5-7h + 峡谷1h + 用餐1h = 7-9h ⚠️ 长途注意疲劳<br>✅ 体力：中体力（开车为主）✅ 合理</div>
+  </div>
+</div>
+
+<!-- Day 10 -->
+<div class="day-card">
+  <div class="day-header" style="background:linear-gradient(135deg,#f7971e,#ffd200);">
+    <h3>Day 10 · 10月10日 返回乌鲁木齐→还车→结束</h3>
+    <div class="meta">收尾日 | 乌鲁木齐市区闲逛+还车+返程</div>
+  </div>
+  <div class="day-body">
+    <div class="time-block">
+      <div class="time-label">🌤️ 上午 · 乌鲁木齐</div>
+      <div class="poi-card local">
+        <div class="poi-info">
+          <h4>新疆国际大巴扎 <span class="local-tag">🌸 AI推荐</span></h4>
+          <span class="free-tag">🆓 免费逛</span>
+          <div class="duration">🕐 建议游览 2 小时</div>
+          <div class="addr">乌鲁木齐天山区</div>
+          <div class="reason">最后一天买特产、吃早餐、感受乌市氛围，不需要买票进任何景区</div>
+        </div>
+      </div>
+    </div>
+    <div class="food-card"><div class="food-title">🥢 乌鲁木齐最后一顿</div><div class="food-detail">大盘鸡、烤包子、酸奶 | ¥80/人 | 推荐五一夜市/领馆巷</div></div>
+    <div class="driving-line">🚗 大巴扎 → 还车点（机场/市区）| 约30min</div>
+    <div class="day-cost">油费¥50 + 餐饮¥80 = <strong>¥130（人均¥65）</strong></div>
+    <div class="time-check">✅ 时间：逛大巴扎2h + 还车1h + 用餐1h = 4h ✅ 收尾轻松<br>✅ 体力：轻体力 ✅ 完美收尾</div>
+  </div>
+</div>
+
+<!-- 费用汇总 -->
+<div class="section">
+  <div class="section-title">📊 费用汇总</div>
+  <table class="summary-table">
+    <tr><th>Day</th><th>里程</th><th>油费</th><th>住宿</th><th>门票</th><th>餐饮</th><th>小计</th></tr>
+    <tr><td>D1 乌鲁木齐→可可托海</td><td>530</td><td>¥420</td><td>¥250</td><td>¥90</td><td>¥60</td><td>¥820</td></tr>
+    <tr><td>D2 →布尔津/五彩滩</td><td>350</td><td>¥280</td><td>¥350</td><td>¥60</td><td>¥150</td><td>¥840</td></tr>
+    <tr><td>D3 →喀纳斯</td><td>150</td><td>¥120</td><td>¥650</td><td>¥340</td><td>¥50</td><td>¥1,160</td></tr>
+    <tr><td>D4 →禾木→南下</td><td>370</td><td>¥240</td><td>¥250</td><td>¥160</td><td>¥120</td><td>¥770</td></tr>
+    <tr><td>D5 →魔鬼城→赛湖</td><td>550</td><td>¥440</td><td>¥400</td><td>¥80</td><td>¥100</td><td>¥1,020</td></tr>
+    <tr><td>D6 赛湖→伊宁</td><td>200</td><td>¥160</td><td>¥300</td><td>¥0</td><td>¥160</td><td>¥620</td></tr>
+    <tr><td>D7 →那拉提</td><td>280</td><td>¥220</td><td>¥300</td><td>¥95</td><td>¥120</td><td>¥735</td></tr>
+    <tr><td>D8 →独库→巴音</td><td>150</td><td>¥120</td><td>¥400</td><td>¥65</td><td>¥120</td><td>¥705</td></tr>
+    <tr><td>D9 →库车/返程</td><td>500</td><td>¥400</td><td>¥250</td><td>¥65</td><td>¥100</td><td>¥865</td></tr>
+    <tr><td>D10 →乌鲁木齐</td><td>30</td><td>¥50</td><td>—</td><td>¥0</td><td>¥80</td><td>¥130</td></tr>
+    <tr class="total-row"><td>合计</td><td>3,110</td><td>¥2,450</td><td>¥3,150</td><td>¥955</td><td>¥1,060</td><td>¥7,615</td></tr>
+  </table>
+  <div style="font-size:13px;color:#999;margin-top:8px;">另需加上：租车费约¥3,000-4,000（10天SUV）+ 过路费约¥200 | 总计约 ¥11,000-12,000（2人合计）| 人均约 ¥5,500-6,000</div>
+  <div class="budget-result save" style="background:#fff3e0;color:#e65100;">
+    <div class="amount">人均约 ¥5,500-6,000</div>
+    <div style="margin-top:4px;font-size:14px;">💡 "花得值"策略生效：住宿在乌市/布尔津/伊宁住快捷省预算，喀纳斯/禾木旺季不可省必须提前订；油费不能省；新疆餐饮分量大两人少点几份</div>
+  </div>
+</div>
+
+<div class="footer">
+  AI知识库生成 · 演示模式（无飞猪预订链接）<br>
+  🔥 热门景点 · 🌸 AI本地推荐<br>
+  行程可对话微调："独库封了怎么办""第5天太累了少开点"
+</div>
+
+</div>
+</body>
+</html>
