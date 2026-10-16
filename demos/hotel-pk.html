@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>酒店PK · 超划算AI旅行管家</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:#f5f7fa; color:#333; line-height:1.6; }
+.container { max-width:800px; margin:0 auto; padding:20px; }
+.header { text-align:center; padding:30px 20px; background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; border-radius:16px; margin-bottom:24px; }
+.header h1 { font-size:24px; margin-bottom:6px; }
+.header .subtitle { font-size:14px; opacity:.9; }
+.pk-arena { background:#fff; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+.pk-fighters { display:flex; gap:16px; margin-bottom:20px; }
+.fighter { flex:1; border-radius:12px; overflow:hidden; border:2px solid transparent; }
+.fighter.a { border-color:#4facfe; }
+.fighter.b { border-color:#f5576c; }
+.fighter img { width:100%; height:140px; object-fit:cover; }
+.fighter .f-info { padding:12px; }
+.fighter .f-name { font-size:15px; font-weight:700; min-height:44px; }
+.fighter .f-price { font-size:22px; font-weight:700; color:#e74c3c; margin:4px 0; }
+.fighter .f-tag { font-size:12px; padding:2px 8px; border-radius:10px; display:inline-block; }
+.fighter.a .f-tag { background:#e3f2fd; color:#1565c0; }
+.fighter.b .f-tag { background:#fce4ec; color:#c62828; }
+.vs-badge { display:flex; align-items:center; justify-content:center; }
+.vs-badge span { font-size:28px; font-weight:900; color:#333; font-style:italic; }
+.pk-table { width:100%; border-collapse:collapse; margin-top:8px; }
+.pk-table th { padding:10px 12px; text-align:center; background:#f0f0f5; font-size:14px; }
+.pk-table th.a-col { color:#1565c0; background:#e3f2fd; border-radius:8px 0 0 8px; }
+.pk-table th.b-col { color:#c6289c; background:#fce4ec; border-radius:0 8px 8px 0; }
+.pk-table td { padding:10px 12px; text-align:center; border-bottom:1px solid #f0f0f0; font-size:14px; }
+.pk-table td.dim { text-align:left; font-weight:600; color:#666; width:110px; }
+.win { background:#e8f5e9 !important; color:#2e7d32 !important; font-weight:700; }
+.lose { color:#999 !important; }
+.verdict { background:linear-gradient(135deg,#2d8659,#41a373); color:#fff; border-radius:16px; padding:24px; margin-bottom:20px; }
+.verdict h3 { font-size:18px; margin-bottom:10px; }
+.verdict .v-main { font-size:16px; line-height:1.8; }
+.verdict .v-highlight { background:rgba(255,255,255,.15); padding:8px 12px; border-radius:8px; margin:10px 0; font-weight:600; }
+.book-section { background:#fff; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+.book-section h3 { font-size:16px; margin-bottom:12px; }
+.book-btn { display:inline-block; padding:10px 24px; background:#ff6b35; color:#fff; text-decoration:none; border-radius:24px; font-size:14px; font-weight:600; }
+.personality-note { background:#fff3e0; border:1px solid #ffe0b2; border-radius:12px; padding:16px; margin-bottom:20px; font-size:14px; color:#e65100; }
+.personality-note h4 { margin-bottom:6px; }
+.footer { text-align:center; padding:20px; color:#999; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>🏨 酒店PK擂台</h1>
+  <div class="subtitle">杭州 · 2026.10.25 入住 1晚 · 旅行人格：花得值 · 场景：西湖1日游</div>
+</div>
+
+<div class="pk-arena">
+  <div class="pk-fighters">
+    <div class="fighter a">
+      <img src="https://img.alicdn.com/imgextra/i4/6000000001099/O1CN01SxtkEI1JzOQTN3Mti_!!6000000001099-2-fliggyimage.png" alt="杭东东酒店">
+      <div class="f-info">
+        <div class="f-name">杭东东巨幕影院酒店（闸弄口地铁站店）</div>
+        <div class="f-price">¥255</div>
+        <span class="f-tag">舒适型</span>
+      </div>
+    </div>
+    <div class="vs-badge"><span>VS</span></div>
+    <div class="fighter b">
+      <img src="https://img.alicdn.com/imgextra/i3/6000000000771/O1CN01bOhCXb1HZAVITv4yw_!!6000000000771-0-hotel.jpg" alt="开元M酒店">
+      <div class="f-info">
+        <div class="f-name">开元M酒店（萧山汽车城新农都店）</div>
+        <div class="f-price">¥143</div>
+        <span class="f-tag">经济型</span>
+      </div>
+    </div>
+  </div>
+
+  <table class="pk-table">
+    <tr>
+      <th class="dim"></th>
+      <th class="a-col">杭东东 ¥255</th>
+      <th class="b-col">开元M ¥143</th>
+    </tr>
+    <tr>
+      <td class="dim">💰 价格</td>
+      <td class="lose">贵 ¥112</td>
+      <td class="win">便宜 ¥112</td>
+    </tr>
+    <tr>
+      <td class="dim">📍 位置</td>
+      <td class="win">地铁1号线闸弄口站，直达西湖3站、火车东站1站</td>
+      <td class="lose">萧山新兴路站，进西湖需换乘，单程约50分钟</td>
+    </tr>
+    <tr>
+      <td class="dim">🎯 景点通勤</td>
+      <td class="win">去西湖约20分钟，回程赶高铁10分钟</td>
+      <td class="lose">去西湖约50分钟，回程赶高铁35分钟</td>
+    </tr>
+    <tr>
+      <td class="dim">🏨 档次</td>
+      <td class="win">舒适型，巨幕影院房（体验加分）</td>
+      <td class="lose">经济型，基础房型</td>
+    </tr>
+    <tr>
+      <td class="dim">🧹 卫生</td>
+      <td>AI评估：连锁新装修，卫生中上</td>
+      <td>AI评估：经济型标准，卫生一般</td>
+    </tr>
+    <tr>
+      <td class="dim">🔊 隔音</td>
+      <td>AI评估：影院房隔音好</td>
+      <td>AI评估：临近马路和市场，噪音风险</td>
+    </tr>
+    <tr>
+      <td class="dim">🍜 早餐</td>
+      <td>需另购，周边餐厅多</td>
+      <td>需另购，周边以市场小摊为主</td>
+    </tr>
+    <tr>
+      <td class="dim">⏰ 时间成本</td>
+      <td class="win">全天通勤约40分钟</td>
+      <td class="lose">全天通勤约100分钟</td>
+    </tr>
+  </table>
+</div>
+
+<div class="verdict">
+  <h3>🤖 AI裁决：推荐 杭东东 ¥255</h3>
+  <div class="v-main">
+    差价 ¥112，但你买到的是：
+    <div class="v-highlight">
+      ① 通勤时间省 60 分钟（2天行程里，1小时能多逛半个茅家埠）<br>
+      ② 舒适型 vs 经济型（玩了一天后回来瘫在舒服的床上 vs 凑合一晚）<br>
+      ③ 返程赶高铁仅10分钟（睡到8点半还来得及，萧山那家得7点半起床）
+    </div>
+    <br>
+    <strong>"花得值"人格裁决逻辑：</strong><br>
+    112元 ÷ 2天 = 每天56元，换60分钟游玩时间 + 更好的休息质量。旅行中最贵的是时间，56元买1小时，这买卖划算。<br>
+    <br>
+    如果你选开元M，省下的112元只够一顿普通晚餐，但你付出的代价是：每天早起半小时 + 通勤多1小时 + 住得差影响第二天体力。<strong>省钱省错了地方。</strong>
+  </div>
+</div>
+
+<div class="personality-note">
+  <h4>🧠 同一个PK，不同人格不同答案</h4>
+  <div style="line-height:1.9;">
+    • <strong>花得值</strong>（本次）：推荐杭东东，112元买60分钟+舒适，值<br>
+    • <strong>一天极致</strong>：推荐杭东东，但如果这晚是"省钱段位"，会选开元M把预算留给明天的奢华酒店<br>
+    • <strong>特种兵</strong>：推荐开元M，只睡6小时要什么影院房，省112元多吃两顿<br>
+    • <strong>雨露均沾</strong>：推荐杭东东，无明显短板，位置稳
+  </div>
+</div>
+
+<div class="book-section">
+  <h3>🔗 预订通道</h3>
+  <p style="margin-bottom:12px;font-size:14px;">杭东东巨幕影院酒店（闸弄口地铁站店）¥255/晚</p>
+  <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F19ttX9" class="book-btn">点击预订</a>
+</div>
+
+<div class="footer">
+  基于 fly.ai 实时数据 + AI评估（评分数据缺失时AI知识补位并标注）<br>
+  飞猪可预订 · 差价/时间成本由AI测算
+</div>
+
+</div>
+</body>
+</html>
