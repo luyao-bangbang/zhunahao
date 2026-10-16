@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上海→杭州 2天1晚自然休闲游 · 超划算AI旅行管家</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
+.container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.header { text-align: center; padding: 40px 20px 30px; background: linear-gradient(135deg, #2d8659 0%, #41a373 100%); color: #fff; border-radius: 16px; margin-bottom: 24px; }
+.header h1 { font-size: 28px; margin-bottom: 8px; }
+.header .subtitle { font-size: 15px; opacity: 0.9; }
+.header .tag { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 13px; margin-top: 12px; }
+.section { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.budget-table { width: 100%; border-collapse: collapse; }
+.budget-table th { text-align: left; padding: 10px 12px; background: #f0f0f5; border-radius: 8px; font-size: 14px; color: #666; }
+.budget-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; font-size: 15px; }
+.budget-table .total td { font-weight: 700; background: #fafafa; border-bottom: none; }
+.day-card { border: 1px solid #e8f5e9; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.day-header { padding: 16px 20px; background: linear-gradient(135deg, #43c6e8 0%, #4facfe 100%); color: #fff; }
+.day-header h3 { font-size: 18px; }
+.day-header .meta { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+.day-body { padding: 20px; }
+.time-block { margin-bottom: 20px; }
+.time-label { font-size: 14px; font-weight: 600; color: #888; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.poi-card { display: flex; gap: 16px; align-items: flex-start; padding: 12px; background: #fafafa; border-radius: 10px; }
+.poi-card.hot { background: #fff8f0; border: 1px solid #ffe0b2; }
+.poi-card.local { background: #f1f8e9; border: 1px solid #c8e6c9; }
+.poi-card img { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.poi-info h4 { font-size: 16px; margin-bottom: 4px; }
+.poi-info .price { color: #e74c3c; font-weight: 600; font-size: 15px; }
+.poi-info .free-tag { color: #27ae60; font-weight: 600; font-size: 14px; }
+.poi-info .duration { color: #666; font-size: 13px; margin-top: 2px; }
+.poi-info .addr { color: #999; font-size: 13px; margin-top: 2px; }
+.poi-info .reason { font-size: 13px; color: #2e7d32; margin-top: 4px; font-style: italic; }
+.poi-info .book-link { display: inline-block; margin-top: 8px; padding: 6px 16px; background: #ff6b35; color: #fff; text-decoration: none; border-radius: 20px; font-size: 13px; }
+.poi-info .local-tag { display: inline-block; padding: 2px 10px; background: #c8e6c9; color: #2e7d32; border-radius: 10px; font-size: 12px; margin-left: 8px; }
+.transport-line { padding: 8px 12px; background: #f0f7ff; border-radius: 8px; margin: 8px 0; font-size: 14px; color: #4a90d9; display: flex; align-items: center; gap: 8px; }
+.hotel-card { display: flex; gap: 16px; align-items: flex-start; padding: 12px; background: #fff8f0; border-radius: 10px; border: 1px solid #ffe0b2; }
+.hotel-card img { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.food-card { padding: 12px; background: #f0fff4; border-radius: 10px; border: 1px solid #c8e6c9; }
+.food-card .food-title { font-size: 15px; font-weight: 600; color: #2e7d32; }
+.food-card .food-detail { font-size: 14px; color: #555; margin-top: 4px; }
+.day-cost { text-align: right; padding: 12px 0 0; border-top: 1px dashed #e0e0e0; margin-top: 8px; font-size: 15px; }
+.day-cost strong { color: #e74c3c; font-size: 18px; }
+.time-check { padding: 8px 12px; background: #f9fbe7; border-radius: 8px; font-size: 13px; color: #827717; margin-top: 8px; }
+.summary-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.summary-table th { text-align: center; padding: 8px; background: #f0f0f5; border-radius: 6px; font-size: 13px; color: #666; }
+.summary-table td { text-align: center; padding: 10px 8px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+.summary-table .total-row td { font-weight: 700; background: #fafafa; }
+.budget-result { text-align: center; margin-top: 16px; padding: 16px; border-radius: 10px; }
+.budget-result.save { background: #e8f5e9; color: #2e7d32; }
+.budget-result .amount { font-size: 28px; font-weight: 700; }
+.footer { text-align: center; padding: 20px; color: #999; font-size: 13px; }
+.must-go { background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; }
+.must-go h4 { font-size: 15px; color: #f57f17; margin-bottom: 6px; }
+.must-go ul { list-style: none; padding: 0; }
+.must-go li { font-size: 14px; color: #555; padding: 3px 0; }
+.avoid-list { background: #ffebee; border: 1px solid #ffcdd2; border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; }
+.avoid-list h4 { font-size: 15px; color: #c62828; margin-bottom: 6px; }
+.avoid-list ul { list-style: none; padding: 0; }
+.avoid-list li { font-size: 14px; color: #555; padding: 3px 0; }
+.personality-badge { display: inline-flex; align-items: center; gap: 6px; background: #fff3e0; color: #e65100; padding: 4px 12px; border-radius: 20px; font-size: 13px; margin-left: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>上海 → 杭州 · 2天1晚自然休闲游</h1>
+    <div class="subtitle">2026.10.25 - 10.26 | 预算 ¥1,000 | 自然风景 · 小众偏好</div>
+    <div class="tag"> powered by fly.ai + AI本地知识</div>
+    <span class="personality-badge">🧠 旅行人格：花得值</span>
+  </div>
+
+  <!-- 必去/避雷 -->
+  <div class="section">
+    <div class="section-title"><span>🎯</span> 必去 & 避雷</div>
+    <div class="must-go">
+      <h4>⭐ 必去景点（热门+小众各半）</h4>
+      <ul>
+        <li>灵隐飞来峰 — 杭州地标，千年古刹+石刻，免费，半天深度游</li>
+        <li>茅家埠 — 🌸 AI推荐，灵隐东侧步行10分钟，本地人周末喝茶散步的地方，无门票</li>
+        <li>西溪国家湿地公园 — 城市湿地，¥69，摇橹船体验独特</li>
+        <li>九溪十八涧 — 🌸 AI推荐，自然步道+茶园溪水，免费，徒步爱好者天堂</li>
+      </ul>
+    </div>
+    <div class="avoid-list">
+      <h4>⚠️ 建议避开</h4>
+      <ul>
+        <li>千岛湖 — 淳安县单程2h+，不适合2天短途</li>
+        <li>杭州野生动物世界 — 富阳区偏远，适合亲子专程</li>
+        <li>宋城 — 商业化人造景区，门票贵且与自然风格不匹配</li>
+        <li>灵隐寺（单独） — 已合并入灵隐飞来峰景区，不重复列出</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 预算分配 -->
+  <div class="section">
+    <div class="section-title"><span>💰</span> 预算智能分配</div>
+    <table class="budget-table">
+      <tr><th>类别</th><th>预算</th><th>占比</th><th>策略</th></tr>
+      <tr><td>往返火车</td><td>¥150</td><td>15%</td><td>高铁二等座，1小时直达</td></tr>
+      <tr><td>住宿</td><td>¥350</td><td>35%</td><td>西湖区/上城区，近景点省交通</td></tr>
+      <tr><td>景点门票</td><td>¥69</td><td>7%</td><td>仅西溪湿地收费，其余全免费（小众优势）</td></tr>
+      <tr><td>餐饮</td><td>¥250</td><td>25%</td><td>杭帮菜+本地小店+1顿稍好</td></tr>
+      <tr><td>当地交通+备用</td><td>¥181</td><td>18%</td><td>地铁+少量打车+骑行租车</td></tr>
+      <tr class="total"><td>合计</td><td>¥1,000</td><td>100%</td><td></td></tr>
+    </table>
+    <div style="margin-top:12px;">
+      <div style="display:flex;gap:4px;height:24px;border-radius:6px;overflow:hidden;">
+        <div style="width:15%;background:#4facfe;"></div>
+        <div style="width:35%;background:#667eea;"></div>
+        <div style="width:7%;background:#2d8659;"></div>
+        <div style="width:25%;background:#f093fb;"></div>
+        <div style="width:18%;background:#43c6e8;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:12px;color:#999;">
+        <span>火车15%</span><span>住宿35%</span><span>门票7%</span><span>餐饮25%</span><span>交通+备用18%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-card">
+    <div class="day-header">
+      <h3>Day 1 · 10月25日（周六）</h3>
+      <div class="meta">主题：灵隐礼佛→茅家埠喝茶→西湖日落 | 上午热门+下午小众，步行串联不走回头路</div>
+    </div>
+    <div class="day-body">
+      <!-- 交通 -->
+      <div class="time-block">
+        <div class="time-label">🚄 上午交通</div>
+        <div class="poi-card hot">
+          <div class="poi-info">
+            <h4>G7331 上海虹桥→杭州东</h4>
+            <span class="free-tag">06:13 出发 → 07:07 抵达（54分钟）</span>
+            <div class="addr">二等座 | 约¥73（参考价，以12306为准）</div>
+            <a href="#" class="book-link">点击预订</a>
+          </div>
+        </div>
+      </div>
+      <!-- 东站→灵隐 -->
+      <div class="transport-line">
+        📍 杭州东站→灵隐：地铁1号线→龙翔桥站转7路公交，约50分钟，¥6 | 或打车约35分钟，约¥40
+      </div>
+      <!-- 灵隐飞来峰 -->
+      <div class="time-block">
+        <div class="time-label">🌤️ 上午 · 灵隐飞来峰（热门）</div>
+        <div class="poi-card hot">
+          <img src="https://img.alicdn.com/imgextra/i2/6000000007452/O1CN013JeWCL24v4E1JF9U9_!!6000000007452-0-fliggyimage.jpg" alt="灵隐飞来峰">
+          <div class="poi-info">
+            <h4>灵隐飞来峰 <span style="font-size:12px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px;">⭐ 必去</span></h4>
+            <span class="free-tag">🆓 免费</span>
+            <div class="duration">🕐 建议游览 3 小时（飞来峰石刻+灵隐寺，早点去人少）</div>
+            <div class="addr">西湖区灵隐路法云弄1号</div>
+            <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F27aTIz" class="book-link">点击预订</a>
+          </div>
+        </div>
+      </div>
+      <!-- 灵隐→茅家埠 -->
+      <div class="transport-line">
+        📍 灵隐→茅家埠：步行约10-15分钟，沿梅灵北路东行，免费 🚶
+      </div>
+      <!-- 茅家埠 -->
+      <div class="time-block">
+        <div class="time-label">🌞 中午 · 茅家埠（小众·本地推荐）</div>
+        <div class="poi-card local">
+          <div class="poi-info">
+            <h4>茅家埠 <span class="local-tag">🌸 本地推荐</span></h4>
+            <span class="free-tag">🆓 免费</span>
+            <div class="duration">🕐 建议游览 1.5 小时（喝茶+湖边散步）</div>
+            <div class="addr">西湖区杨公堤以西，灵隐东侧</div>
+            <div class="reason">选这里因为离灵隐步行10分钟，是本地人周末喝茶发呆的地方，西湖的西岸，人少清净，能看到真正的杭州生活气息</div>
+          </div>
+        </div>
+      </div>
+      <!-- 午餐 -->
+      <div class="time-block">
+        <div class="time-label">🍽️ 午餐</div>
+        <div class="food-card">
+          <div class="food-title">🥢 茅家埠周边农家菜/茶餐</div>
+          <div class="food-detail">推荐：龙井虾仁、油焖笋、本地土鸡 | 茅家埠一带的农家菜馆 | 预算 ¥80/人</div>
+        </div>
+      </div>
+      <!-- 茅家埠→西湖 -->
+      <div class="transport-line">
+        📍 茅家埠→西湖（苏堤/杨公堤方向）：步行约20分钟沿杨公堤南下，或骑共享单车10分钟
+      </div>
+      <!-- 西湖 -->
+      <div class="time-block">
+        <div class="time-label">🌅 下午 · 西湖（热门·夕阳时段）</div>
+        <div class="poi-card hot">
+          <img src="https://img.alicdn.com/imgextra/i1/6000000007744/O1CN01wpyBDF274nqr0ykTm_!!6000000007744-0-fliggyimage.jpg" alt="西湖">
+          <div class="poi-info">
+            <h4>西湖风景名胜区 <span style="font-size:12px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px;">⭐ 必去</span></h4>
+            <span class="free-tag">🆓 免费</span>
+            <div class="duration">🕐 建议游览 2.5 小时（下午3点后光线好，从苏堤南端往雷峰塔方向走）</div>
+            <div class="addr">西湖区龙井路1号</div>
+            <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F2lxjB8" class="book-link">点击预订</a>
+          </div>
+        </div>
+      </div>
+      <div class="transport-line">
+        📍 苏堤南端→雷峰塔：步行约15分钟，沿南山路
+      </div>
+      <!-- 雷峰塔 -->
+      <div class="time-block">
+        <div class="time-label">🌆 傍晚 · 雷峰塔看夕阳</div>
+        <div class="poi-card hot">
+          <img src="https://img.alicdn.com/tfscom/TB1xRz01br1gK0jSZFDSuv9yVXa" alt="雷峰塔">
+          <div class="poi-info">
+            <h4>雷峰塔</h4>
+            <span class="price">约¥40（需查看实际票价）</span>
+            <div class="duration">🕐 建议游览 45 分钟（登塔看夕阳西湖全景）</div>
+            <div class="addr">西湖区南山路15号</div>
+            <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F1TkZK9" class="book-link">点击预订</a>
+          </div>
+        </div>
+      </div>
+      <!-- 晚餐 -->
+      <div class="time-block">
+        <div class="time-label">🍽️ 晚餐</div>
+        <div class="food-card">
+          <div class="food-title">🥢 南山路/河坊街方向</div>
+          <div class="food-detail">推荐：定胜糕、葱包桧、片儿川 | 南山路一带本地小店 | 预算 ¥60/人</div>
+        </div>
+      </div>
+      <!-- 住宿 -->
+      <div class="time-block">
+        <div class="time-label">🏨 住宿</div>
+        <div class="hotel-card">
+          <img src="https://img.alicdn.com/imgextra/i4/6000000001099/O1CN01SxtkEI1JzOQTN3Mti_!!6000000001099-2-fliggyimage.png" alt="酒店">
+          <div class="poi-info">
+            <h4>东站·杭东东巨幕影院酒店（闸弄口地铁站店）</h4>
+            <span class="price">¥255/晚</span> · 舒适型
+            <div class="addr">上城区机场路42号（地铁1号线闸弄口站，次日去西溪和返程都方便）</div>
+            <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F19ttX9" class="book-link">点击预订</a>
+          </div>
+        </div>
+      </div>
+      <div class="day-cost">
+        火车¥73 + 地铁/打车¥46 + 门票¥40 + 住宿¥255 + 餐饮¥140 = <strong>¥554</strong>
+      </div>
+      <div class="time-check">
+        ✅ 时间校验：交通1h + 灵隐3h + 茅家埠1.5h + 午餐1h + 西湖2.5h + 雷峰塔0.75h + 晚餐1h = 10.75h（07:30-18:15）✅ 休闲风格，节奏合理
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <h3>Day 2 · 10月26日（周日）</h3>
+      <div class="meta">主题：九溪徒步→西溪湿地摇橹船→返程 | 上午小众自然+下午热门湿地，一静一动</div>
+    </div>
+    <div class="day-body">
+      <!-- 酒店→九溪 -->
+      <div class="transport-line">
+        📍 酒店→九溪：地铁1号线→龙翔桥转4路公交，约45分钟，¥6 | 或打车约30分钟，约¥35
+      </div>
+      <!-- 九溪十八涧 -->
+      <div class="time-block">
+        <div class="time-label">🌤️ 上午 · 九溪十八涧（小众·本地推荐）</div>
+        <div class="poi-card local">
+          <div class="poi-info">
+            <h4>九溪十八涧 <span class="local-tag">🌸 本地推荐</span></h4>
+            <span class="free-tag">🆓 免费</span>
+            <div class="duration">🕐 建议游览 2.5 小时（茶园步道+溪水潺潺，自然风光为主）</div>
+            <div class="addr">西湖区九溪路（灵隐以南，钱塘江以北）</div>
+            <div class="reason">选这里因为你偏好自然风景，九溪是杭州本地人最爱的徒步线路，溪水茶园完全免费，早上空气好人少，比西湖更有野趣</div>
+          </div>
+        </div>
+      </div>
+      <!-- 九溪→午餐 -->
+      <div class="transport-line">
+        📍 九溪→午餐：打车至西溪路/天目山路方向，约20分钟，约¥30
+      </div>
+      <!-- 午餐 -->
+      <div class="time-block">
+        <div class="time-label">🍽️ 午餐</div>
+        <div class="food-card">
+          <div class="food-title">🥢 西溪路/紫金港附近</div>
+          <div class="food-detail">推荐：杭帮小炒、本地面馆 | 预算 ¥60/人 | 为下午西溪湿地做准备</div>
+        </div>
+      </div>
+      <!-- 午餐→西溪 -->
+      <div class="transport-line">
+        📍 午餐→西溪湿地：步行或短打车约10分钟，¥10
+      </div>
+      <!-- 西溪湿地 -->
+      <div class="time-block">
+        <div class="time-label">🌞 下午 · 西溪国家湿地公园（热门·可预订）</div>
+        <div class="poi-card hot">
+          <img src="https://img.alicdn.com/imgextra/i4/6000000005962/O1CN012Z6cPe1tue9pPgyKa_!!6000000005962-0-fliggyimage.jpg" alt="西溪湿地">
+          <div class="poi-info">
+            <h4>西溪国家湿地公园 <span style="font-size:12px;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px;">⭐ 必去</span></h4>
+            <span class="price">¥69/人</span>
+            <div class="duration">🕐 建议游览 3 小时（摇橹船+步行，慢节奏）</div>
+            <div class="addr">西湖区天目山路518号</div>
+            <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F1MbvYs" class="book-link">点击预订</a>
+          </div>
+        </div>
+      </div>
+      <!-- 西溪→火车站 -->
+      <div class="transport-line">
+        📍 西溪→杭州东站：打车约25分钟，约¥35 | 或地铁返回约45分钟，¥5
+      </div>
+      <!-- 返程 -->
+      <div class="time-block">
+        <div class="time-label">🚄 下午返程</div>
+        <div class="poi-card hot">
+          <div class="poi-info">
+            <h4>G7526 杭州东→上海虹桥</h4>
+            <span class="free-tag">22:51 出发 → 23:36 抵达（45分钟）</span>
+            <div class="addr">二等座 | 约¥73（参考价，以12306为准）</div>
+            <a href="#" class="book-link">点击预订</a>
+          </div>
+        </div>
+      </div>
+      <div class="day-cost">
+        门票¥69 + 交通¥86 + 火车¥73 + 餐饮¥110 = <strong>¥338</strong>
+      </div>
+      <div class="time-check">
+        ✅ 时间校验：交通1h + 九溪2.5h + 午餐1h + 西溪3h + 交通0.5h = 8h（08:30-16:30）✅ 下午充足时间返程，非常宽松
+      </div>
+    </div>
+  </div>
+
+  <!-- 费用汇总 -->
+  <div class="section">
+    <div class="section-title"><span>📊</span> 费用汇总</div>
+    <table class="summary-table">
+      <tr><th>日期</th><th>大交通</th><th>当地交通</th><th>住宿</th><th>景点</th><th>餐饮</th><th>小计</th></tr>
+      <tr><td>Day 1</td><td>¥73</td><td>¥46</td><td>¥255</td><td>¥40</td><td>¥140</td><td>¥554</td></tr>
+      <tr><td>Day 2</td><td>¥73</td><td>¥86</td><td>—</td><td>¥69</td><td>¥110</td><td>¥338</td></tr>
+      <tr class="total-row"><td>合计</td><td>¥146</td><td>¥132</td><td>¥255</td><td>¥109</td><td>¥250</td><td>¥892</td></tr>
+    </table>
+    <div class="budget-result save">
+      <div class="amount">预算结余 ¥108</div>
+      <div style="margin-top:4px;font-size:14px;">💡 可用于：西溪摇橹船升级（约¥60）、茅家埠多喝壶茶、或带点杭州特产回去</div>
+    </div>
+  </div>
+
+  <!-- 行中调整提示 -->
+  <div class="section" style="background: #f3e5f5;">
+    <div class="section-title"><span>🔄</span> 行中动态调整</div>
+    <div style="font-size:14px;color:#555;line-height:1.8;">
+      旅途中遇到变化，直接跟AI说一句话：<br>
+      • "明天下雨了" → AI自动将九溪换为室内：浙江省博物馆/中国丝绸博物馆<br>
+      • "九溪走完了还有时间" → AI推荐附近钱塘江大桥或六和塔登塔<br>
+      • "西溪摇橹船排队太长" → AI切换为步行绿道方案<br>
+      • "酒店太远了换近的" → AI重搜西湖区酒店并算差价<br>
+      <br>
+      只调整受影响的部分，不动其他天行程。
+    </div>
+  </div>
+
+  <div class="footer">
+    基于 fly.ai 实时数据 + AI本地知识生成<br>
+    🔥 热门景点有飞猪预订链接 · 🌸 本地推荐为AI知识库推荐（无预订链接）<br>
+    行程可对话微调："第二天的换掉"或"下雨了换室内活动"
+  </div>
+</div>
+</body>
+</html>
