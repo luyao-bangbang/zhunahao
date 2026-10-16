@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>住哪好 · 2026飞猪AI旅行创新大赛</title>
+<style>
+:root {
+  --ink: #1a1a1a;
+  --ink-2: #555;
+  --ink-3: #999;
+  --paper: #faf9f7;
+  --card: #fff;
+  --accent: #b8865a;
+  --line: #e8e5e0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:"PingFang SC","Hiragino Sans GB",-apple-system,"Microsoft YaHei",sans-serif; background:var(--paper); color:var(--ink); line-height:1.8; letter-spacing:.02em; }
+.wrap { max-width:720px; margin:0 auto; padding:0 28px; }
+
+/* ===== nav ===== */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(250,249,247,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+nav .wrap { display:flex; align-items:center; justify-content:space-between; height:56px; }
+nav .brand { font-weight:700; font-size:17px; cursor:pointer; letter-spacing:.1em; }
+nav .links { display:flex; gap:4px; }
+nav .links a { padding:6px 14px; font-size:13px; color:var(--ink-2); cursor:pointer; border-radius:16px; transition:.2s; }
+nav .links a:hover { color:var(--ink); }
+nav .links a.on { color:#fff; background:var(--ink); }
+
+/* ===== hero ===== */
+header { min-height:88vh; display:flex; align-items:center; text-align:center; padding:120px 0 80px; }
+header .wrap { width:100%; }
+header .brand-big { font-size:64px; font-weight:200; letter-spacing:.35em; text-indent:.35em; margin-bottom:28px; }
+header .tagline { font-size:22px; font-weight:300; color:var(--ink-2); letter-spacing:.08em; line-height:2; }
+header .tagline b { font-weight:500; color:var(--ink); }
+header .meta { margin-top:48px; font-size:13px; color:var(--ink-3); letter-spacing:.12em; }
+
+/* ===== sections ===== */
+section { padding:72px 0; border-top:1px solid var(--line); }
+.kicker { font-size:12px; color:var(--accent); letter-spacing:.3em; text-transform:uppercase; margin-bottom:12px; }
+h2 { font-size:30px; font-weight:600; letter-spacing:.04em; margin-bottom:20px; }
+.lead { font-size:16px; color:var(--ink-2); font-weight:300; max-width:560px; }
+
+/* chain */
+.chain { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:36px 0 8px; }
+.chain span { font-size:14px; color:var(--ink-3); }
+.chain span.done { text-decoration:line-through; }
+.chain span.q { color:var(--ink); font-weight:600; font-size:17px; }
+.chain i { color:var(--line); font-style:normal; font-size:14px; }
+
+/* verdict quote */
+.verdict { margin:36px 0; padding:28px 32px; background:var(--card); border-left:3px solid var(--accent); border-radius:0 12px 12px 0; font-size:15px; color:var(--ink-2); }
+.verdict b { color:var(--ink); }
+
+/* three features */
+.features { margin-top:40px; display:grid; gap:0; }
+.feat { padding:32px 0; border-top:1px solid var(--line); display:flex; gap:28px; align-items:baseline; }
+.feat:first-child { border-top:none; }
+.feat .num { font-size:13px; color:var(--accent); font-weight:600; min-width:32px; letter-spacing:.1em; }
+.feat h3 { font-size:18px; font-weight:600; margin-bottom:6px; letter-spacing:.03em; }
+.feat p { font-size:14px; color:var(--ink-2); font-weight:300; }
+
+/* modes table - minimal */
+table { width:100%; border-collapse:collapse; margin-top:32px; font-size:14px; }
+th { text-align:left; font-weight:500; color:var(--ink-3); font-size:12px; letter-spacing:.15em; padding:12px 8px; border-bottom:1px solid var(--ink); }
+td { padding:16px 8px; border-bottom:1px solid var(--line); color:var(--ink-2); }
+td:first-child { color:var(--ink); font-weight:500; }
+
+/* mcp */
+.mcp-box { margin-top:32px; padding:28px 32px; background:var(--ink); color:rgba(255,255,255,.85); border-radius:14px; font-size:14px; line-height:2; font-weight:300; }
+.mcp-box b { color:#fff; font-weight:500; }
+.mcp-box .mcp-title { color:var(--accent); font-size:12px; letter-spacing:.3em; margin-bottom:10px; }
+
+/* demos */
+.demos { display:grid; grid-template-columns:1fr; gap:16px; margin-top:36px; }
+.demo { display:block; padding:24px 28px; background:var(--card); border:1px solid var(--line); border-radius:12px; cursor:pointer; text-decoration:none; color:var(--ink); transition:.25s; }
+.demo:hover { border-color:var(--ink); transform:translateY(-2px); }
+.demo .d-kicker { font-size:11px; color:var(--accent); letter-spacing:.25em; margin-bottom:6px; }
+.demo h3 { font-size:17px; font-weight:600; margin-bottom:4px; }
+.demo p { font-size:13px; color:var(--ink-3); font-weight:300; }
+.demo.main { border-color:var(--accent); }
+
+/* steps */
+.steps { counter-reset:s; margin-top:32px; }
+.step { padding:14px 0 14px 44px; position:relative; border-bottom:1px solid var(--line); font-size:14px; color:var(--ink-2); }
+.step:last-child { border-bottom:none; }
+.step::before { counter-increment:s; content:counter(s,decimal-leading-zero); position:absolute; left:0; top:14px; font-size:12px; color:var(--accent); font-weight:600; letter-spacing:.1em; }
+.step code { font-family:ui-monospace,Menlo,monospace; font-size:12px; background:var(--card); border:1px solid var(--line); padding:2px 8px; border-radius:5px; color:var(--ink); }
+
+footer { padding:48px 0 64px; text-align:center; font-size:12px; color:var(--ink-3); letter-spacing:.1em; border-top:1px solid var(--line); }
+
+/* ===== sub pages ===== */
+.page { display:none; }
+.page.active { display:block; }
+.page-container { max-width:900px; margin:0 auto; padding:84px 20px 40px; }
+</style>
+<style>
+
+#page-pk, #page-hz, #page-bj { background:#faf9f7; }
+.sub-wrap { max-width:720px; margin:0 auto; padding:0 28px 64px; }
+.sub-head { padding:48px 0 28px; border-bottom:1px solid #e8e5e0; margin-bottom:36px; }
+.sub-kicker { font-size:12px; color:#b8865a; letter-spacing:.3em; margin-bottom:10px; }
+.sub-title { font-size:32px; font-weight:600; letter-spacing:.04em; line-height:1.4; }
+.sub-meta { margin-top:10px; font-size:13px; color:#999; letter-spacing:.05em; }
+.sub-sec { padding:32px 0 8px; }
+.sub-sec-kicker { font-size:12px; color:#b8865a; letter-spacing:.3em; margin-bottom:14px; }
+h3.sh { font-size:18px; font-weight:600; margin-bottom:12px; letter-spacing:.03em; }
+p.slead { font-size:15px; color:#555; font-weight:300; }
+.quote { margin:24px 0; padding:22px 26px; background:#fff; border-left:3px solid #b8865a; border-radius:0 10px 10px 0; font-size:14px; color:#555; line-height:1.9; }
+.quote b { color:#1a1a1a; }
+.quote .hl { color:#b8865a; font-weight:600; }
+.card { background:#fff; border:1px solid #e8e5e0; border-radius:12px; padding:22px 24px; margin-bottom:16px; transition:.25s; }
+.card:hover { border-color:#b8865a; }
+.card .c-kicker { font-size:11px; color:#b8865a; letter-spacing:.25em; margin-bottom:6px; }
+.card h4 { font-size:16px; font-weight:600; margin-bottom:6px; color:#1a1a1a; }
+.card .c-sub { font-size:13px; color:#999; line-height:1.8; }
+.card .c-price { font-size:20px; font-weight:600; color:#1a1a1a; margin:4px 0; }
+.card .c-price small { font-size:12px; color:#999; font-weight:400; }
+.card img { width:100%; height:180px; object-fit:cover; border-radius:8px; margin:12px 0; }
+.img-row { display:flex; gap:14px; margin:12px 0; flex-wrap:wrap; }
+.img-row img { flex:1; min-width:140px; height:120px; object-fit:cover; border-radius:8px; margin:0; }
+table.pt { width:100%; border-collapse:collapse; margin:24px 0; font-size:14px; background:#fff; border:1px solid #e8e5e0; border-radius:12px; overflow:hidden; }
+table.pt th { background:#1a1a1a; color:#faf9f7; font-weight:400; padding:14px 18px; font-size:13px; letter-spacing:.1em; text-align:left; }
+table.pt th .hp { color:#b8865a; }
+table.pt td { padding:14px 18px; border-bottom:1px solid #eee9e3; color:#555; line-height:1.7; }
+table.pt td:first-child { color:#999; font-size:12px; letter-spacing:.15em; width:92px; }
+table.pt tr:last-child td { border-bottom:none; }
+td.win { color:#1a1a1a; font-weight:600; }
+td.win::before { content:"\25C6 "; color:#b8865a; font-size:10px; }
+.route { display:flex; gap:10px; align-items:baseline; padding:10px 0 10px 18px; border-left:1px solid #e8e5e0; margin:6px 0; font-size:13px; color:#777; line-height:1.8; }
+.route b { color:#1a1a1a; font-weight:500; }
+.day-div { display:flex; align-items:baseline; gap:16px; padding:28px 0 12px; border-bottom:1px solid #1a1a1a; margin-top:40px; flex-wrap:wrap; }
+.day-div .dnum { font-size:13px; color:#b8865a; letter-spacing:.2em; font-weight:600; }
+.day-div h3 { font-size:22px; font-weight:600; letter-spacing:.03em; }
+.day-div .dmeta { font-size:12px; color:#999; margin-left:auto; text-align:right; }
+.cost-line { text-align:right; font-size:13px; color:#999; padding:12px 0; border-top:1px dashed #e8e5e0; margin-top:8px; }
+.cost-line b { font-size:17px; color:#1a1a1a; font-weight:600; }
+.check-line { font-size:12px; color:#8a8a7a; padding:8px 12px; background:#f5f3ef; border-radius:6px; margin-top:8px; letter-spacing:.03em; line-height:1.8; }
+.bookbtn { display:inline-block; padding:8px 22px; background:#1a1a1a; color:#faf9f7; text-decoration:none; border-radius:22px; font-size:13px; letter-spacing:.1em; margin-top:10px; transition:.2s; cursor:pointer; }
+.bookbtn:hover { background:#b8865a; }
+table.st { width:100%; border-collapse:collapse; margin:24px 0; font-size:13px; }
+table.st th { font-weight:500; color:#999; font-size:11px; letter-spacing:.15em; padding:10px 8px; border-bottom:1px solid #1a1a1a; text-align:center; }
+table.st td { padding:12px 8px; border-bottom:1px solid #e8e5e0; color:#555; text-align:center; }
+table.st td:first-child { text-align:left; color:#1a1a1a; font-weight:500; font-size:12px; }
+table.st tr.total td { border-top:1px solid #1a1a1a; border-bottom:none; color:#1a1a1a; font-weight:600; }
+.save { margin:20px 0; padding:20px 26px; background:#1a1a1a; color:rgba(255,255,255,.85); border-radius:12px; font-size:14px; line-height:1.9; }
+.save .amount { font-size:26px; font-weight:600; color:#fff; }
+.save .amount em { font-style:normal; color:#b8865a; }
+.warn { margin:20px 0; padding:18px 24px; background:#fff; border:1px solid #e8e5e0; border-left:3px solid #b8865a; border-radius:0 10px 10px 0; font-size:13px; color:#777; line-height:1.9; }
+.warn b { color:#1a1a1a; }
+.sub-foot { text-align:center; padding:32px 0 0; font-size:11px; color:#bbb; letter-spacing:.15em; border-top:1px solid #e8e5e0; margin-top:48px; }
+ul.clean { list-style:none; padding:0; }
+ul.clean li { padding:6px 0 6px 20px; position:relative; font-size:14px; color:#555; line-height:1.8; }
+ul.clean li::before { content:"\2014"; position:absolute; left:0; color:#b8865a; }
+ul.clean li b { color:#1a1a1a; }
+.flex2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:640px){ .flex2 { grid-template-columns:1fr; } }
+
+</style>
+<style>
+
+
+</style>
+<style>
+/* paper texture watermarks */
+#page-hz { background:#faf9f7 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNjAiIGhlaWdodD0iMzYwIiB2aWV3Qm94PSIwIDAgMzYwIDM2MCI+CjxkZWZzPjxwYXR0ZXJuIGlkPSJoenBhcGVyIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjM2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I4ODY1YSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjA1Ij4KPHBhdGggZD0iTTIwIDYwIFE3MCA0MCAxMjAgNjAgVDIyMCA2MCBUMzIwIDYwIFQ0NDAgNjAiLz4KPHBhdGggZD0iTTIwIDEwMCBRNzAgODAgMTIwIDEwMCBUMjIwIDEwMCBUMzIwIDEwMCBUNDQwIDEwMCIgb3BhY2l0eT0iMC43Ii8+CjxwYXRoIGQ9Ik0wIDE0MCBRNjAgMTIwIDEyMCAxNDAgVDI0MCAxNDAgVDM2MCAxNDAiLz4KPHBhdGggZD0iTTYwIDE4MCBRMTEwIDE2MCAxNjAgMTgwIFQyNjAgMTgwIFQzNjAgMTgwIiBvcGFjaXR5PSIwLjYiLz4KPHBhdGggZD0iTTIwIDIyMCBRODAgMjAwIDE0MCAyMjAgVDI2MCAyMjAgVDM4MCAyMjAiIG9wYWNpdHk9IjAuNyIvPgo8cGF0aCBkPSJNMCAyNjAgUTYwIDI0MCAxMjAgMjYwIFQyNDAgMjYwIFQzNjAgMjYwIiBvcGFjaXR5PSIwLjUiLz4KPHBhdGggZD0iTTQwIDMwMCBRMTAwIDI4MCAxNjAgMzAwIFQyODAgMzAwIFQ0MDAgMzAwIiBvcGFjaXR5PSIwLjgiLz4KPHBhdGggZD0iTTIwIDM0MCBRNzAgMzIwIDEyMCAzNDAgVDIyMCAzNDAgVDMyMCAzNDAgVDQ0MCAzNDAiIG9wYWNpdHk9IjAuNiIvPgo8L2c+CjxnIGZpbGw9IiNiODg2NWEiIG9wYWNpdHk9IjAuMDQiPgo8Y2lyY2xlIGN4PSIxNjAiIGN5PSIxMjAiIHI9IjIiLz4KPGNpcmNsZSBjeD0iMzAwIiBjeT0iMjAwIiByPSIyLjUiLz4KPGNpcmNsZSBjeD0iODAiIGN5PSIyNDAiIHI9IjEuNSIvPgo8Y2lyY2xlIGN4PSIyMjAiIGN5PSIzMjAiIHI9IjIiLz4KPC9nPgo8L3BhdHRlcm4+PC9kZWZzPgo8cmVjdCB3aWR0aD0iMzYwIiBoZWlnaHQ9IjM2MCIgZmlsbD0idXJsKCNoenBhcGVyKSIvPgo8L3N2Zz4="); }
+#page-bj { background:#faf9f7 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgMzAwIDMwMCI+CjxkZWZzPjxwYXR0ZXJuIGlkPSJ4anBhcGVyIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I4ODY1YSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjA1Ij4KPHBhdGggZD0iTTAgNzUgTDc1IDAgTDE1MCA3NSBMMjI1IDAgTDMwMCA3NSIvPgo8cGF0aCBkPSJNMCAxNTAgTDc1IDc1IEwxNTAgMTUwIEwyMjUgNzUgTDMwMCAxNTAiLz4KPHBhdGggZD0iTTAgMjI1IEw3NSAxNTAgTDE1MCAyMjUgTDIyNSAxNTAgTDMwMCAyMjUiLz4KPHBhdGggZD0iTTAgMzAwIEw3NSAyMjUgTDE1MCAzMDAgTDIyNSAyMjUgTDMwMCAzMDAiLz4KPHBhdGggZD0iTTc1IDMwMCBMMTUwIDIyNSBNMTUwIDc1IEwyMjUgMTUwIi8+CjxwYXRoIGQ9Ik0zNy41IDM3LjUgTDExMi41IDM3LjUgTDc1IDAgTTE4Ny41IDM3LjUgTDI2Mi41IDM3LjUgTDIyNSAwIi8+CjwvZz4KPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjg4NjVhIiBzdHJva2Utd2lkdGg9IjAuOCIgb3BhY2l0eT0iMC4wNDUiPgo8Y2lyY2xlIGN4PSI3NSIgY3k9Ijc1IiByPSI2Ii8+CjxjaXJjbGUgY3g9IjIyNSIgY3k9Ijc1IiByPSI2Ii8+CjxjaXJjbGUgY3g9Ijc1IiBjeT0iMjI1IiByPSI2Ii8+CjxjaXJjbGUgY3g9IjIyNSIgY3k9IjIyNSIgcj0iNiIvPgo8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNTAiIHI9IjgiLz4KPC9nPgo8L3BhdHRlcm4+PC9kZWZzPgo8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCN4anBhcGVyKSIvPgo8L3N2Zz4="); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand" onclick="showPage('home')">住哪好</span>
+    <div class="links">
+      <a id="nav-home" class="on" onclick="showPage('home')">概览</a>
+      <a id="nav-pk" onclick="showPage('pk')">酒店PK</a>
+      <a id="nav-hz" onclick="showPage('hz')">杭州行程</a>
+      <a id="nav-bj" onclick="showPage('bj')">北疆行程</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+<header>
+  <div class="wrap">
+    <div class="brand-big">住哪好</div>
+    <div class="tagline">攻略看完，机票订完——<br><b>选哪家酒店，交给 AI 裁决。</b></div>
+    <div class="meta">2026 飞猪 AI 旅行创新大赛 · 参赛作品 · 百炼 Managed Agent</div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">THE PROBLEM · 最后一公里</div>
+    <h2>所有做完攻略的人，<br>都卡在同一步。</h2>
+    <div class="chain">
+      <span class="done">机票已订</span><i>——</i>
+      <span class="done">攻略已做</span><i>——</i>
+      <span class="q">选哪家酒店？</span><i>——</i>
+      <span>看美食</span>
+    </div>
+    <p class="lead">攻略只说"住西湖附近"。但"附近"有 300 家酒店民宿。<br>机票没得比，门票全同价——住宿，是旅行中唯一值得精挑细选的决策。</p>
+    <div class="verdict">
+      用户一句话：<b>"我25号去杭州，玩灵隐和西湖，住哪好？"</b><br>
+      AI 搜索候选，发起 PK，给出裁决：<b>选杭东东 ¥255。</b>差价112元÷2天=56元/天，买到通勤省60分钟与舒适型休息，值——省钱省错了地方。
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">CORE · 核心能力</div>
+    <h2>不列数据，给答案。</h2>
+    <div class="features">
+      <div class="feat">
+        <span class="num">01</span>
+        <div>
+          <h3>酒店 PK 擂台</h3>
+          <p>价格 / 位置通勤 / 装修年份 / 评分+评价条数 / 差评关键词 / 卫生 / 隔音 / 早餐——八维度对决，裁决必须站队：推荐哪家，为什么，差价买到了什么。</p>
+        </div>
+      </div>
+      <div class="feat">
+        <span class="num">02</span>
+        <div>
+          <h3>差评关键词解读</h3>
+          <p>好评都是模板，差评才是真相。分数要带条数看：4.8分(12条) ＜ 4.6分(2300条)。AI 提炼高频差评词，替你翻完三千条评价。</p>
+        </div>
+      </div>
+      <div class="feat">
+        <span class="num">03</span>
+        <div>
+          <h3>决策顺序感知</h3>
+          <p>带着攻略来，位置权重拉满；酒店就是目的地，反转验证值不值；去看演唱会，场馆半径成硬约束。三种用户，三种裁决视角。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">ARCHITECTURE · 架构</div>
+    <h2>MCP 原生，非爬虫套壳。</h2>
+    <div class="mcp-box">
+      <div class="mcp-title">DIRECT · 结构化直连</div>
+      经飞猪 flyai skill（MCP）直接获取结构化数据：价格、装修年份、预订链接。<b>不模拟人工点击，不解析网页。</b>毫秒级响应，人只做最后一步付款确认。今天接飞猪，明天日历 / 地图 / 支付 MCP 开放，同一个 Agent 无缝扩展。
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">DEMO · 演示</div>
+    <h2>眼见为实。</h2>
+    <div class="demos">
+      <a class="demo main" onclick="showPage('pk')">
+        <div class="d-kicker">核心 DEMO · FLY.AI 实时数据</div>
+        <h3>酒店 PK 擂台</h3>
+        <p>¥255 vs ¥143 八维度对决 · AI 裁决 · 四种旅行人格四种答案</p>
+      </a>
+      <a class="demo" onclick="showPage('hz')">
+        <div class="d-kicker">行程上下文</div>
+        <h3>杭州 · 2天1晚</h3>
+        <p>轻量行程骨架，为裁决提供位置与通勤依据</p>
+      </a>
+      <a class="demo" onclick="showPage('bj')">
+        <div class="d-kicker">行程上下文</div>
+        <h3>北疆 · 10天自驾</h3>
+        <p>长线场景的住宿选点与逐日编排</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">DEPLOY · 部署</div>
+    <h2>六步跑通。</h2>
+    <div class="steps">
+      <div class="step">进入阿里云百炼平台，创建 Managed Agent 智能体</div>
+      <div class="step">会话中执行 <code>npx skills add alibaba-flyai/flyai-skill</code></div>
+      <div class="step">前往飞猪 FlyAI 开放平台申请 API Key</div>
+      <div class="step">配置环境变量 <code>FLYAI_API_KEY</code></div>
+      <div class="step">将 system-prompt.md 设为系统提示词</div>
+      <div class="step">测试："我25号去杭州，玩灵隐和西湖，住哪好？"</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  住哪好 · ZHU NA HAO<br>
+  fly.ai 实时数据 + AI 本地知识 · 飞猪预订闭环
+</footer>
+
+</div>
+
+<!-- ============ SUB PAGES (injected) ============ -->
+<div class="page" id="page-pk">
+<div class="sub-wrap">
+  <div class="sub-head">
+    <div class="sub-kicker">CORE DEMO · FLY.AI LIVE DATA</div>
+    <div class="sub-title">酒店 PK 擂台</div>
+    <div class="sub-meta">杭州 · 2026.10.25 入住1晚 · 旅行人格：花得值 · 场景：西湖1日游</div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">CANDIDATES · 候选</div>
+    <div class="flex2">
+      <div class="card">
+        <div class="c-kicker">A · 闸弄口地铁站</div>
+        <h4>杭东东巨幕影院酒店</h4>
+        <div class="c-price">¥255 <small>/晚 · 舒适型</small></div>
+        <img src="https://img.alicdn.com/imgextra/i4/6000000001099/O1CN01SxtkEI1JzOQTN3Mti_!!6000000001099-2-fliggyimage.png" alt="">
+        <div class="c-sub">地铁1号线闸弄口站 · 直达西湖3站 · 距火车东站1站</div>
+      </div>
+      <div class="card">
+        <div class="c-kicker">B · 萧山新兴路</div>
+        <h4>开元M酒店</h4>
+        <div class="c-price">¥143 <small>/晚 · 经济型</small></div>
+        <img src="https://img.alicdn.com/imgextra/i3/6000000000771/O1CN01bOhCXb1HZAVITv4yw_!!6000000000771-0-hotel.jpg" alt="">
+        <div class="c-sub">萧山汽车城 · 进西湖需换乘 · 单程约50分钟</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">VERDICT TABLE · 八维度对决</div>
+    <table class="pt">
+      <tr><th></th><th>杭东东 <span class="hp">¥255</span></th><th>开元M <span class="hp">¥143</span></th></tr>
+      <tr><td>价格</td><td>贵 ¥112</td><td class="win">便宜 ¥112</td></tr>
+      <tr><td>位置</td><td class="win">闸弄口站，西湖3站直达</td><td>萧山，进西湖需换乘</td></tr>
+      <tr><td>景点通勤</td><td class="win">去西湖约20分钟</td><td>去西湖约50分钟</td></tr>
+      <tr><td>档次</td><td class="win">舒适型 · 影院房</td><td>经济型 · 基础房型</td></tr>
+      <tr><td>装修</td><td class="win">新装修 · 连锁</td><td>较旧 · 临路市场</td></tr>
+      <tr><td>卫生</td><td>AI评估：中上</td><td>AI评估：一般</td></tr>
+      <tr><td>隔音</td><td class="win">影院房隔音好</td><td>噪音风险</td></tr>
+      <tr><td>早餐</td><td>另购 · 周边餐厅多</td><td>另购 · 市场小摊为主</td></tr>
+      <tr><td>时间成本</td><td class="win">全天通勤约40分钟</td><td>全天通勤约100分钟</td></tr>
+    </table>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">AI VERDICT · 裁决</div>
+    <div class="quote">
+      <b>推荐 杭东东 ¥255。</b><br><br>
+      差价 ¥112，买到的是：通勤省 <b>60 分钟</b>（两天行程里，1小时能多逛半个茅家埠）；舒适型休息（玩一天后瘫在好床上 vs 凑合一晚）；返程赶高铁仅10分钟——萧山那家得早起半小时。<br><br>
+      <span class="hl">"花得值"人格算法：</span>112元 ÷ 2天 = 56元/天，买60分钟游玩时间与睡眠质量。旅行中最贵的是时间。<b>56元买1小时，划算。省钱省错了地方。</b>
+    </div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">PERSONAS · 同一PK，四种答案</div>
+    <ul class="clean">
+      <li><b>花得值</b>（本次）——杭东东：56元/天买1小时+舒适，值</li>
+      <li><b>一天极致</b>——省钱段位选开元M，预算留给明天的奢华酒店</li>
+      <li><b>特种兵</b>——开元M：只睡6小时要什么影院房，省112多吃两顿</li>
+      <li><b>雨露均沾</b>——杭东东：无明显短板，位置稳</li>
+    </ul>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">BOOKING · 预订</div>
+    <div class="card">
+      <h4>杭东东巨幕影院酒店（闸弄口地铁站店）</h4>
+      <div class="c-price">¥255 <small>/晚</small></div>
+      <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F19ttX9" class="bookbtn">预订 · 飞猪</a>
+    </div>
+  </div>
+
+  <div class="sub-foot">FLY.AI 实时数据 + AI评估（评分缺失时AI知识补位并标注）</div>
+</div>
+</div>
+<div class="page" id="page-hz">
+<div class="sub-wrap">
+  <div class="sub-head">
+    <div class="sub-kicker">CONTEXT DEMO · 行程上下文</div>
+    <div class="sub-title">杭州 · 2天1晚</div>
+    <div class="sub-meta">上海出发 · 2026.10.25-26 · 预算 ¥1,000 · 自然小众 · 休闲节奏</div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">INSIGHT · 为什么这个行程</div>
+    <div class="quote">
+      用户偏好<b>自然小众</b>、休闲节奏（一天一个大景点）。行程的价值不是打卡，而是为酒店裁决提供依据：<b>主景点在西湖区西线</b>——这是位置权重的计算基础。
+    </div>
+    <ul class="clean">
+      <li><b>必去</b>——灵隐飞来峰（免费）· 九溪十八涧（免费）· 西溪湿地（¥69）</li>
+      <li><b>本地推荐</b>——茅家埠（灵隐步行10分钟，本地人喝茶处，免费）</li>
+      <li><b>避开</b>——千岛湖（2天去不了）· 宋城（商业化）· 天池（国庆人挤人）</li>
+      <li><b>去重合并</b>——灵隐寺并入飞来峰景区（同址法云弄1号）</li>
+    </ul>
+  </div>
+
+  <div class="day-div"><span class="dnum">DAY 1</span><h3>灵隐 · 茅家埠 · 西湖日落</h3><div class="dmeta">10.25 周六 · 热门+小众交替</div></div>
+
+  <div class="route">🚄 <b>G7331</b> 上海虹桥 06:13 → 杭州东 07:07 · 约¥73（以12306为准）</div>
+  <div class="route">📍 杭州东 → 灵隐：地铁1号线转公交，约50分钟，¥6；打车35分钟约¥40</div>
+
+  <div class="card">
+    <div class="c-kicker">上午 · 热门 · 免费</div>
+    <h4>灵隐飞来峰</h4>
+    <div class="c-sub">建议游览3小时（飞来峰石刻+灵隐寺，早去人少）</div>
+    <div class="img-row"><img src="https://img.alicdn.com/imgextra/i2/6000000007452/O1CN013JeWCL24v4E1JF9U9_!!6000000007452-0-fliggyimage.jpg" alt=""></div>
+    <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F27aTIz" class="bookbtn">预订 · 飞猪</a>
+  </div>
+
+  <div class="route">🚶 灵隐 → 茅家埠：沿梅灵北路东行步行10-15分钟</div>
+
+  <div class="card">
+    <div class="c-kicker">中午 · 本地推荐 · 免费</div>
+    <h4>茅家埠</h4>
+    <div class="c-sub">建议1.5小时喝茶+湖边散步。离灵隐步行10分钟，西湖西岸，本地人周末去处，无门票</div>
+  </div>
+
+  <div class="card">
+    <div class="c-kicker">午餐 · ¥80/人</div>
+    <h4>茅家埠周边农家茶餐</h4>
+    <div class="c-sub">龙井虾仁 · 油焖笋 · 本地土鸡</div>
+  </div>
+
+  <div class="route">🚶 茅家埠 → 西湖苏堤南端：沿杨公堤步行20分钟或骑车10分钟</div>
+
+  <div class="card">
+    <div class="c-kicker">下午 · 热门 · 免费</div>
+    <h4>西湖风景名胜区</h4>
+    <div class="c-sub">建议2.5小时（15:00后光线好，白堤→平湖秋月→苏堤）· 苏堤电瓶车¥10/段</div>
+    <div class="img-row"><img src="https://img.alicdn.com/imgextra/i1/6000000007744/O1CN01wpyBDF274nqr0ykTm_!!6000000007744-0-fliggyimage.jpg" alt=""></div>
+    <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F2lxjB8" class="bookbtn">预订 · 飞猪</a>
+  </div>
+
+  <div class="card">
+    <div class="c-kicker">傍晚 · 约¥40</div>
+    <h4>雷峰塔 · 夕阳</h4>
+    <div class="c-sub">45分钟登塔看西湖全景 · 南山路步行15分钟可达</div>
+    <div class="img-row"><img src="https://img.alicdn.com/tfscom/TB1xRz01br1gK0jSZFDSuv9yVXa" alt=""></div>
+    <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F1TkZK9" class="bookbtn">预订 · 飞猪</a>
+  </div>
+
+  <div class="card">
+    <div class="c-kicker">晚餐 · ¥60/人</div>
+    <h4>南山路 · 河坊街</h4>
+    <div class="c-sub">定胜糕 · 葱包桧 · 片儿川</div>
+  </div>
+
+  <div class="card">
+    <div class="c-kicker">住宿 · PK裁决结果</div>
+    <h4>杭东东巨幕影院酒店（闸弄口店）</h4>
+    <div class="c-price">¥255 <small>/晚 · 舒适型</small></div>
+    <div class="c-sub">地铁1号线闸弄口站 · 次日去九溪与返程都方便 · 详见酒店PK页</div>
+    <a href="https://router.feizhu.com/multi/webview?url=https%3A%2F%2Frouter.feizhu.com%2Fws%2F19ttX9" class="bookbtn">预订 · 飞猪</a>
+  </div>
+
+  <div class="cost-line">火车¥73 + 交通¥46 + 门票¥40 + 住宿¥255 + 餐饮¥140 = <b>¥554</b></div>
+  <div class="check-line">时间校验：交通1h+灵隐3h+茅家埠1.5h+西湖2.5h+雷峰塔0.75h+用餐2h = 10.75h ✓ ｜ 体力校验：中体力 ✓ 休闲节奏合理</div>
+
+  <div class="day-div"><span class="dnum">DAY 2</span><h3>九溪徒步 · 返程</h3><div class="dmeta">10.26 周日 · 一天一个大景点</div></div>
+
+  <div class="route">🚇 酒店 → 九溪：地铁+公交约45分钟¥6；打车30分钟约¥35</div>
+
+  <div class="card">
+    <div class="c-kicker">上午 · 本地推荐 · 免费</div>
+    <h4>九溪十八涧</h4>
+    <div class="c-sub">建议2.5小时。杭州本地人最爱的徒步线，溪水茶园完全免费，早上空气好人少，比西湖更有野趣</div>
+  </div>
+
+  <div class="card">
+    <div class="c-kicker">午餐 · ¥60/人</div>
+    <h4>西溪路 · 紫金港</h4>
+    <div class="c-sub">杭帮小炒 · 本地面馆</div>
+  </div>
+
+  <div class="route">🚗 九溪 → 杭州东：打车25分钟约¥35</div>
+  <div class="route">🚄 <b>G7526</b> 杭州东 22:51 → 上海虹桥 23:36 · 约¥73（以12306为准）</div>
+
+  <div class="cost-line">门票¥0 + 交通¥86 + 火车¥73 + 餐饮¥110 = <b>¥269</b></div>
+  <div class="check-line">时间校验：九溪2.5h+用餐1h+交通1.5h = 5h ✓ 下午充足 ✓ ｜ 体力校验：重体力1个且在上午 ✓</div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">BUDGET · 费用汇总</div>
+    <table class="st">
+      <tr><th>日期</th><th>大交通</th><th>当地交通</th><th>住宿</th><th>景点</th><th>餐饮</th><th>小计</th></tr>
+      <tr><td>Day 1</td><td>¥73</td><td>¥46</td><td>¥255</td><td>¥40</td><td>¥140</td><td>¥554</td></tr>
+      <tr><td>Day 2</td><td>¥73</td><td>¥86</td><td>—</td><td>¥0</td><td>¥110</td><td>¥269</td></tr>
+      <tr class="total"><td>合计</td><td>¥146</td><td>¥132</td><td>¥255</td><td>¥40</td><td>¥250</td><td>¥823</td></tr>
+    </table>
+    <div class="save"><span class="amount">预算结余 <em>¥177</em></span><br>可用于九溪后加一顿下午茶、西溪摇橹船，或买点特产回去。</div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">IN-TRIP · 行中动态调整</div>
+    <ul class="clean">
+      <li><b>"下雨了"</b>——九溪换室内：浙江省博物馆 / 丝绸博物馆</li>
+      <li><b>"走完了还有时间"</b>——附近加钱塘江大桥或六和塔</li>
+      <li><b>"酒店太远换近的"</b>——重搜西湖区并算差价，只动当晚</li>
+    </ul>
+  </div>
+
+  <div class="sub-foot">FLY.AI 实时数据 + AI本地知识 · 热门景点含飞猪预订链接 · 本地推荐无链接</div>
+</div>
+</div>
+<div class="page" id="page-bj">
+<div class="sub-wrap">
+  <div class="sub-head">
+    <div class="sub-kicker">CONTEXT DEMO · 长线场景</div>
+    <div class="sub-title">北疆 · 10天自驾大环线</div>
+    <div class="sub-meta">2026.10.01-10 · 国庆 · 租车自驾约3,500km · 人均约¥5,500-6,000</div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">WHY · 长线场景的住宿选点逻辑</div>
+    <div class="quote">
+      长线自驾与城市2日游的酒店逻辑完全不同：<b>住宿跟着驾驶节奏走</b>——赶路日住县城快捷省预算，核心日（喀纳斯/禾木）旺季房价不可省必须提前锁，中段安排一个休整点（伊宁）洗漱补给。这是预算智能分配在长线上的体现。
+    </div>
+    <div class="warn">
+      <b>国庆北疆特别提醒</b><br>
+      喀纳斯/禾木夜间可降至0°C以下，带羽绒服 ｜ 独库公路10月可能因降雪封路，备选G218 ｜ 旺季住宿翻倍且必须提前订 ｜ 沿途加油站间隔远，见站就加 ｜ 新疆日落晚（约19:30），行车节奏可比内地晚2小时
+    </div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">MUST & AVOID · 必去与避雷</div>
+    <ul class="clean">
+      <li><b>必去</b>——喀纳斯三湾 · 禾木晨雾 · 赛里木湖环湖 · 独库公路 · 乌尔禾魔鬼城</li>
+      <li><b>本地推荐</b>——五彩滩日落 · 白哈巴村（需边防证）· 喀赞其老城 · 琼库什台</li>
+      <li><b>避开</b>——天山天池（人挤人）· 火焰山（偏离环线）· 克拉玛依市区（仅加油）</li>
+    </ul>
+  </div>
+
+  <div class="day-div"><span class="dnum">D1-2</span><h3>乌鲁木齐 → 可可托海 → 布尔津</h3><div class="dmeta">赶路日 · 约880km</div></div>
+  <ul class="clean">
+    <li><b>D1</b> G216穿古尔班通古特沙漠（公路即景观），宿富蕴县城快捷 ¥250</li>
+    <li><b>D2</b> 下午五彩滩看日落（约¥60，16:30-18:00最佳光线），宿布尔津 ¥350</li>
+    <li>餐饮：富蕴手抓肉 ¥60/人 · 布尔津烤鱼+河堤夜市 ¥150/人</li>
+  </ul>
+  <div class="check-line">时间校验：D1驾车7h ✓ ｜ 体力校验：中体力（开车为主）✓</div>
+
+  <div class="day-div"><span class="dnum">D3-4</span><h3>喀纳斯深度 → 禾木晨雾</h3><div class="dmeta">核心日 · 门票支出大头</div></div>
+  <ul class="clean">
+    <li><b>D3 喀纳斯</b> 门票约¥160+区间车¥120。时间拆解：神仙湾晨雾30min → 月亮湾-卧龙湾徒步1.5h → 湖边1h → 观鱼台1.5h → 排队1h。宿贾登峪/喀纳斯村木屋 ¥650（旺季必须提前订）</li>
+    <li><b>D4 禾木</b> 6:30起登观景台30min → 晨雾炊烟1h → 逛村1h → 区间车1h。下午G219南下300km，宿乌尔禾 ¥250</li>
+    <li>餐饮：景区内自带干粮 ¥50/人 · 禾木村图瓦手抓肉 ¥60/人</li>
+  </ul>
+  <div class="check-line">时间校验：D3景区5h+山路3h ✓ ｜ 体力校验：D4早起爬山（重体力1h）+下午驾车4h ⚠ 建议轮换驾驶</div>
+
+  <div class="day-div"><span class="dnum">D5-6</span><h3>魔鬼城 → 赛里木湖 → 伊宁</h3><div class="dmeta">长途日+休整日 · 约750km</div></div>
+  <ul class="clean">
+    <li><b>D5</b> 上午魔鬼城1.5h（区间车40min+拍照30min+排队20min），G30西行550km，傍晚赛湖看日落，宿湖边蒙古包 ¥400（看星空）或精河县城 ¥200</li>
+    <li><b>D6</b> 赛湖环湖自驾3h（90km走走停停）→ 果子沟大桥（车上观看最壮观）→ 下午伊宁喀赞其老城2h，宿伊宁市区 ¥300 好好休整</li>
+    <li>餐饮：精河拌面 ¥50/人 · 伊宁喀赞其手工冰淇淋+烤包子+纳仁 ¥160/人</li>
+  </ul>
+  <div class="check-line">时间校验：D5驾车6h ⚠ 注意疲劳驾驶 ｜ 体力校验：D6轻体力（自驾+散步）✓ 休整日</div>
+
+  <div class="day-div"><span class="dnum">D7-8</span><h3>那拉提 → 独库公路 → 巴音布鲁克</h3><div class="dmeta">公路日 · 封路预案</div></div>
+  <ul class="clean">
+    <li><b>D7</b> G218东行280km沿途巩乃斯河谷，下午那拉提草原2.5h（区间车30min+草原漫步/骑马1.5h）。或选AI本地推荐琼库什台村（原生态哈萨克牧区，免费）。宿那拉提镇 ¥300</li>
+    <li><b>D8</b> 独库公路150km（雪山+峡谷+草甸，见加油站必加）。15:00前进巴音布鲁克：区间车30min → 九曲十八弯日落1.5h → 天鹅湖30min。宿巴音布鲁克镇 ¥400（高海拔夜间冷）</li>
+    <li><b>封路预案</b>：独库封闭则走G218经巩乃斯沟→和静→绕回，多约200km</li>
+  </ul>
+  <div class="check-line">时间校验：D8驾车3.5h+巴音布鲁克3h ✓ ｜ 体力校验：轻体力（区间车为主）✓</div>
+
+  <div class="day-div"><span class="dnum">D9-10</span><h3>返程 → 乌鲁木齐</h3><div class="dmeta">收尾 · 约400-700km</div></div>
+  <ul class="clean">
+    <li><b>D9</b> 方案A：独库南段经天山神秘大峡谷（约¥65）→ 库车 ¥250 ｜ 方案B：G217直接北上，途中独山子大峡谷，宿库车或直达乌鲁木齐</li>
+    <li><b>D10</b> 新疆国际大巴扎2h买特产吃早餐（免费逛），还车返程。最后一顿：大盘鸡+烤包子 ¥80/人</li>
+  </ul>
+
+  <div class="sub-sec">
+    <div class="sub-sec-kicker">BUDGET · 费用汇总（2人合计）</div>
+    <table class="st">
+      <tr><th>Day</th><th>里程</th><th>油费</th><th>住宿</th><th>门票</th><th>餐饮</th><th>小计</th></tr>
+      <tr><td>D1</td><td>530</td><td>¥420</td><td>¥250</td><td>¥90</td><td>¥60</td><td>¥820</td></tr>
+      <tr><td>D2</td><td>350</td><td>¥280</td><td>¥350</td><td>¥60</td><td>¥150</td><td>¥840</td></tr>
+      <tr><td>D3</td><td>150</td><td>¥120</td><td>¥650</td><td>¥340</td><td>¥50</td><td>¥1,160</td></tr>
+      <tr><td>D4</td><td>370</td><td>¥240</td><td>¥250</td><td>¥160</td><td>¥120</td><td>¥770</td></tr>
+      <tr><td>D5</td><td>550</td><td>¥440</td><td>¥400</td><td>¥80</td><td>¥100</td><td>¥1,020</td></tr>
+      <tr><td>D6</td><td>200</td><td>¥160</td><td>¥300</td><td>¥0</td><td>¥160</td><td>¥620</td></tr>
+      <tr><td>D7</td><td>280</td><td>¥220</td><td>¥300</td><td>¥95</td><td>¥120</td><td>¥735</td></tr>
+      <tr><td>D8</td><td>150</td><td>¥120</td><td>¥400</td><td>¥65</td><td>¥120</td><td>¥705</td></tr>
+      <tr><td>D9</td><td>500</td><td>¥400</td><td>¥250</td><td>¥65</td><td>¥100</td><td>¥865</td></tr>
+      <tr><td>D10</td><td>30</td><td>¥50</td><td>—</td><td>¥0</td><td>¥80</td><td>¥130</td></tr>
+      <tr class="total"><td>合计</td><td>3,110</td><td>¥2,450</td><td>¥3,150</td><td>¥955</td><td>¥1,060</td><td>¥7,615</td></tr>
+    </table>
+    <div class="save"><span class="amount">人均约 <em>¥5,500-6,000</em></span><br>另含租车SUV约¥3,000-4,000（10天）+过路约¥200。"花得值"策略：乌市/布尔津/伊宁住快捷省预算，喀纳斯/禾木旺季不可省必须提前锁，油费不能省，新疆菜分量大两人少点几份。</div>
+  </div>
+
+  <div class="sub-foot">AI知识库生成（演示模式，不含飞猪预订链接）· 热门景点标⭐ · 本地推荐标🌸</div>
+</div>
+</div>
+
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('nav .links a').forEach(function(n) { n.classList.remove('on'); });
+  var nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('on');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
