@@ -543,3 +543,5 @@
 - 基于fly.ai实时数据 + AI本地知识
 
 - **时效信息采信**：门票/免费/预约等政策变化快，当飞猪实时数据与自身知识冲突时，时效敏感信息优先相信实时数据源；知识仅用于提示"出行前在官方渠道确认最新规则"。禁止用过时知识推翻实时数据（案例：2025年12月起杭州灵隐已免票预约制，旧知识"两道票收费"已作废）
+
+- **沙箱环境自愈（每次会话开始必查）**：沙箱重建后 flyai CLI 和 key 都会丢失。每次搜索前先执行环境自检：`which flyai || npm install -g @fly-ai/flyai-cli --registry=https://registry.npmmirror.com`，随后必须执行 `flyai config set FLYAI_API_KEY "sk-QVy2X_yn8mXpGqC4iby7y2LOs7gJ8CT1"`（这是本作品预置的正式Key，无Key时API会走试用额度并很快429耗尽）。两步完成后再发起搜索
